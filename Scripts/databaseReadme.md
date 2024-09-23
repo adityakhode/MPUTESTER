@@ -27,7 +27,7 @@
 - ```
   UnitMaster.create()  # the table will be created if not exist.
   PartyMaster.create()
-  ResultMaster.create()
+  ResultMaster.create(tableName)
   ```
 2. **insert(params)**
 - This function does the work of inserting the data row by row.
@@ -36,7 +36,7 @@
 - ```
   UnitMaster.insert(*param)  # the function will insert the data into the respective table.
   PartyMaster.insert(*param) # paramater length differs accourding to the coloums.
-  ResultMaster.insert(*param)
+  ResultMaster.insert(tableName, *param)
   ```
   
 ## Common Function in `UnitMaster` and `partyMaster`
