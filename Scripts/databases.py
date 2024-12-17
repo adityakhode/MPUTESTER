@@ -1,5 +1,6 @@
 import pandas as pd
 import sqlite3
+import json
 import os
 
 class UnitMaster:
@@ -78,12 +79,20 @@ class UnitMaster:
         dropQuery = '''
         DROP TABLE UnitMaster
         '''
-        # Execute the SQL command with parameters
-        cursor.execute(insert_query, params)
-
-        # Commit the transaction and close the connection
-        conn.commit()
-        conn.close()
+        try:
+            # Execute the SQL command with parameters
+            cursor.execute(insert_query, params)
+        except sqlite3.IntegrityError as e:
+            print("Record already present in unitMaster. Unique constraint violation.")
+            print(f"Error: {e}")
+        except sqlite3.DatabaseError as e:
+            print(f"Database error occurred: {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+        finally:
+            # Commit the transaction and close the connection
+            conn.commit()
+            conn.close()
 
     def addData(filename):
 
@@ -219,6 +228,40 @@ class UnitMaster:
         # Return True if a row is found, otherwise False
         return result
 
+    def getDetails(TcNo):
+        # Define the SQL command to select data based on TcNo
+        select_query = '''
+        SELECT Threading, Lengths, ThreadingGoNoGo, NoLockNuts, NutThickness, NutFlatAcross, PinProtrusion, CabelType, CableLength, Connector1, Connector2 FROM UnitMaster WHERE PartNo = ?;
+        '''
+
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        databases_dir = os.path.join(base_dir, 'Databases')
+        os.makedirs(databases_dir, exist_ok=True)
+        db_path = os.path.join(databases_dir, "unitMaster.db")
+
+        # Connect to the SQLite database (creates the file if it doesn't exist)
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        
+        try:
+            # Execute the SQL command with the parameter
+            cursor.execute(select_query, (TcNo,))
+            
+            # Fetch all matching rows
+            results = cursor.fetchall()
+            
+            # If no rows are found, return an empty list or appropriate message
+            if not results:
+                return "No records found"
+            
+            return results[0]
+        except sqlite3.Error as e:
+            # Handle any SQLite errors
+            return f"An error occurred: {e}"
+        finally:
+            # Close the database connection
+            conn.close()
+
 class PartyMaster:
 
     def create():
@@ -265,11 +308,20 @@ class PartyMaster:
         VALUES (?, ?, ?);
         '''
         
-        # Execute the SQL command with parameters
-
-        cursor.execute(insert_query, (supplier_code, party_name, party_address))
-        conn.commit()
-        conn.close()
+        try:
+            # Execute the SQL command with parameters
+            cursor.execute(insert_query, (supplier_code, party_name, party_address))
+        except sqlite3.IntegrityError as e:
+            print("Record already present PartyMaster. Unique constraint violation.")
+            print(f"Error: {e}")
+        except sqlite3.DatabaseError as e:
+            print(f"Database error occurred: {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+        finally:
+            # Commit the transaction and close the connection
+            conn.commit()
+            conn.close()
 
     def addData(filename):
         #Reads the data from excel and remove the leading and Traling whiteSpaces
@@ -334,7 +386,7 @@ class PartyMaster:
         # Return True if a row is found, otherwise False
         return result
 
-class resultMaster:
+class ResultMaster:
     def create(tablename):
         # Define the SQL command to create the table with the given name
         create_table_query = f'''
@@ -347,6 +399,7 @@ class resultMaster:
             "SupplierCode"          CHAR,
             "BatchNo"               CHAR,
             "ChallanQuantity"       SMALLINT,
+            "ChallanNumber"         INTEGER,
             "ChallanDate"           DATE,
             "Resistance1Value"      FLOAT,
             "Resistance1Status"     FLOAT,
@@ -391,7 +444,7 @@ class resultMaster:
 
     def insert(tablename, *params):
         # Ensure the correct number of parameters
-        if len(params) != 31:
+        if len(params) != 32:
             print(len(params))
             raise ValueError("Expected 31 parameters for the Result Master table")
     
@@ -399,13 +452,13 @@ class resultMaster:
         insert_query = f'''
         INSERT INTO "{tablename}" (
             "TcNo", "TcDate", "PartNo", "PartName", "PartyName", "SupplierCode", "BatchNo",
-            "ChallanQuantity", "ChallanDate", "Resistance1Value", "Resistance1Status",
+            "ChallanQuantity", "ChallanNumber", "ChallanDate", "Resistance1Value", "Resistance1Status",
             "Resistance2Value", "Resistance2Status", "Inductance1Value", "Inductance1Status",
             "Inductance2Value", "Inductance2Status", "Frequency1Value", "Frequency2Value",
             "Voltage1NoLoadValue", "Voltage1NoLoadStatus", "Voltage2NoLoadValue", "Voltage2NoLoadStatus",
             "Voltage1-10kLoadValue", "Voltage1-10kLoadStatus", "Voltage2-10kLoadValue", "Voltage2-10kLoadStatus",
             "Voltage1-3k3LoadValue", "Voltage1-3k3LoadStatus", "Voltage2-3k3LoadValue", "Voltage2-3k3Loadstatus"
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         '''
         filename = tablename + ".db"
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -417,13 +470,21 @@ class resultMaster:
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
     
-        # Execute the SQL command with parameters
-        cursor.execute(insert_query, params)
-        
-        # Commit the transaction and close the connection
-        conn.commit()
-        conn.close()
-    
+        try:
+            # Execute the SQL command with parameters
+            cursor.execute(insert_query, params)
+        except sqlite3.IntegrityError as e:
+            print("Record already presentResultMaster. Unique constraint violation.")
+            print(f"Error: {e}")
+        except sqlite3.DatabaseError as e:
+            print(f"Database error occurred: {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+        finally:
+            # Commit the transaction and close the connection
+            conn.commit()
+            conn.close()
+
     def getDetails(tablename, TcNo):
 
         # Define the SQL command to select data based on TcNo
@@ -450,7 +511,7 @@ class resultMaster:
             if not results:
                 return "No records found"
             
-            return results
+            return results[0]
         except sqlite3.Error as e:
             # Handle any SQLite errors
             return f"An error occurred: {e}"
@@ -464,7 +525,7 @@ class resultMaster:
             result = PartyMaster.getSupplierCodeAndNameList()
             for row in result:
                 tableName = row[0] + "-" + row[1]
-                resultMaster.create(tableName)
+                ResultMaster.create(tableName)
 
     def printDetails(row):
         TcNo = row[0]
@@ -531,4 +592,63 @@ class resultMaster:
         print(f"Voltage1_3k3LoadStatus: {Voltage1_3k3LoadStatus}")
         print(f"Voltage2_3k3LoadValue: {Voltage2_3k3LoadValue}")
         print(f"Voltage2_3k3LoadStatus: {Voltage2_3k3LoadStatus}")
-    
+
+class SaveDetails:
+    def jsonFile(tablename, TcNo, part_no, file_name="data.json"):
+
+        result1 = ResultMaster.getDetails(tablename, TcNo)
+        result2 = UnitMaster.getDetails(part_no)
+
+        # Create a dictionary with the row data
+        data = {
+            "TcNo"                   : result1[0],
+            "TcDate"                 : result1[1],
+            "PartNo"                 : result1[2],
+            "PartName"               : result1[3],
+            "PartyName"              : result1[4],
+            "SupplierCode"           : result1[5],
+            "BatchNo"                : result1[6],
+            "ChallanQuantity"        : result1[7],
+            "ChallanNumber"          : result1[8],
+            "ChallanDate"            : result1[9],
+            "Resistance1Value"       : result1[10],
+            "Resistance1Status"      : result1[11],
+            "Resistance2Value"       : result1[12],
+            "Resistance2Status"      : result1[13],
+            "Inductance1Value"       : result1[14],
+            "Inductance1Status"      : result1[15],
+            "Inductance2Value"       : result1[16],
+            "Inductance2Status"      : result1[17],
+            "Frequency1Value"        : result1[18],
+            "Frequency2Value"        : result1[19],
+            "Voltage1NoLoadValue"    : result1[20],
+            "Voltage1NoLoadStatus"   : result1[21],
+            "Voltage2NoLoadValue"    : result1[22],
+            "Voltage2NoLoadStatus"   : result1[23],
+            "Voltage1_10kLoadValue"  : result1[24],
+            "Voltage1_10kLoadStatus" : result1[25],
+            "Voltage2_10kLoadValue"  : result1[26],
+            "Voltage2_10kLoadStatus" : result1[27],
+            "Voltage1_3k3LoadValue"  : result1[28],
+            "Voltage1_3k3LoadStatus" : result1[29],
+            "Voltage2_3k3LoadValue"  : result1[30],
+            "Voltage2_3k3LoadStatus" : result1[31],
+
+            "Threading"              : result2[0],
+            "Lengths"                : result2[1],
+            "ThreadingGoNoGo"        : result2[2],
+            "NoLockNuts"             : result2[3],
+            "NutThickness"           : result2[4],
+            "NutFlatAcross"          : result2[5],
+            "PinProtrusion"          : result2[6],
+            "CabelType"              : result2[7],
+            "CableLength"            : result2[8],
+            "Connector1"             : result2[9],
+            "Connector2"             : result2[10]
+        }
+
+        #Save the data dictionary to a JSON file
+        with open(file_name, "w") as json_file:
+            json.dump(data, json_file, indent=4)
+
+        print(f"Data saved successfully to {file_name}")
