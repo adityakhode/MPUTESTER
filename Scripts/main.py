@@ -6,7 +6,7 @@ start = time.time()
 if __name__ == "__main__":
 
     #UnitMaster.create()
-    UnitMaster.insert(15464546543, "PartA", 1, "Threaded", 10, "Y", 4, 0.25, 0.3, 0.4, "Type1", 15, "Conn1", "Conn2", 0.5, 0.6, 12.0, 10.0, 1.2, 0.8, 60.0)
+    #UnitMaster.insert(15464546543, "PartA", 1, "Threaded", 10, "Y", 4, 0.25, 0.3, 0.4, "Type1", 15, "Conn1", "Conn2", 0.5, 0.6, 12.0, 10.0, 1.2, 0.8, 60.0)
     UnitMaster.addData("refrenceMaterial/unitMaster.xlsx")
     #print(UnitMaster.dataAvailable())
     #print(UnitMaster.getPartNo(12345))
@@ -15,7 +15,7 @@ if __name__ == "__main__":
     #print(result[1][0])
 
     # PartyMaster.create()
-    PartyMaster.insert(9659,"kiuedhuiaeh","iauegfie")
+    #PartyMaster.insert(9659,"kiuedhuiaeh","iauegfie")
     PartyMaster.addData("refrenceMaterial/partyMaster.xlsx")
     #print(PartyMaster.dataAvailable())
 

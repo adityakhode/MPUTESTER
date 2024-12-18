@@ -34,8 +34,12 @@ class UnitMaster:
             "Connector2"         VARCHAR,
             "UpperResistance"      FLOAT,
             "LowerResistance"      FLOAT,
-            "UpperVoltage"         FLOAT,
-            "LowerVoltage"         FLOAT,
+            "UpperVoltage0kLoad"   FLOAT,
+            "LowerVoltage0kLoad"   FLOAT,
+            "UpperVoltage10kLoad"  FLOAT,
+            "LowerVoltage10kLoad"  FLOAT,
+            "UpperVoltage3k3Load"  FLOAT,
+            "LowerVoltage3k3Load"  FLOAT,
             "UpperInductance"      FLOAT,
             "LowerInductance"      FLOAT,
             "FREQUENCY"            FLOAT
@@ -54,7 +58,7 @@ class UnitMaster:
         UnitMaster.create()
 
         # Ensure the correct number of parameters
-        if len(params) != 21:
+        if len(params) != 25:
             raise ValueError("Expected 21 parameters for the UnitMaster table")
 
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -72,8 +76,8 @@ class UnitMaster:
             "PartNo", "PartName", "SingleDualOp", "Threading", "Lengths", "ThreadingGoNoGo",
             "NoLockNuts", "NutThickness", "NutFlatAcross", "PinProtrusion", "CabelType",
             "CableLength", "Connector1", "Connector2", "UpperResistance", "LowerResistance",
-            "UpperVoltage", "LowerVoltage", "UpperInductance", "LowerInductance", "FREQUENCY"
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            "UpperVoltage0kLoad", "LowerVoltage0kLoad", "UpperVoltage10kLoad", "LowerVoltage10kLoad", UpperVoltage3k3Load, "LowerVoltage3k3Load", "UpperInductance", "LowerInductance", "FREQUENCY"
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         '''
 
         dropQuery = '''
@@ -101,29 +105,33 @@ class UnitMaster:
         data.columns = data.columns.str.strip()
 
         for index, row in data.iterrows():
-            PartNo          = row.get('PartNo'         )
-            PartName        = row.get('PartName'       )
-            SingleDualOp    = row.get('SingleDualOp'   )
-            Threading       = row.get('Threading'      )
-            Lengths         = row.get('Lengths'        )
-            ThreadingGoNoGo = row.get('ThreadingGoNoGo')
-            NoLockNuts      = row.get('NoLockNuts'     )
-            NutThickness    = row.get('NutThickness'   )
-            NutFlatAcross   = row.get('NutFlatAcross'  )
-            PinProtrusion   = row.get('PinProtrusion'  )
-            CabelType       = row.get('CabelType'      )
-            CableLength     = row.get('CableLength'    )
-            Connector1      = row.get('Connector1'     )
-            Connector2      = row.get('Connector2'     )
-            UpperResistance = row.get('UpperResistance')
-            LowerResistance = row.get('LowerResistance')
-            UpperVoltage    = row.get('UpperVoltage'   )
-            LowerVoltage    = row.get('LowerVoltage'   )
-            UpperInductance = row.get('UpperInductance')
-            LowerInductance = row.get('LowerInductance')
-            Frequency       = row.get('FREQUENCY'      )
+            PartNo              = row.get('PartNo'             )
+            PartName            = row.get('PartName'           )
+            SingleDualOp        = row.get('SingleDualOp'       )
+            Threading           = row.get('Threading'          )
+            Lengths             = row.get('Lengths'            )
+            ThreadingGoNoGo     = row.get('ThreadingGoNoGo'    )
+            NoLockNuts          = row.get('NoLockNuts'         )
+            NutThickness        = row.get('NutThickness'       )
+            NutFlatAcross       = row.get('NutFlatAcross'      )
+            PinProtrusion       = row.get('PinProtrusion'      )
+            CabelType           = row.get('CabelType'          )
+            CableLength         = row.get('CableLength'        )
+            Connector1          = row.get('Connector1'         )
+            Connector2          = row.get('Connector2'         )
+            UpperResistance     = row.get('UpperResistance'    )
+            LowerResistance     = row.get('LowerResistance'    )
+            UpperVoltage0kLoad  = row.get('UpperVoltage0kLoad' )
+            LowerVoltage0kLoad  = row.get('LowerVoltage0kLoad' )
+            UpperVoltage10kLoad = row.get('UpperVoltage10kLoad')
+            LowerVoltage10kLoad = row.get('LowerVoltage10kLoad')
+            UpperVoltage3k3Load = row.get('UpperVoltage3k3Load')
+            LowerVoltage3k3Load = row.get('LowerVoltage3k3Load')
+            UpperInductance     = row.get('UpperInductance'    )
+            LowerInductance     = row.get('LowerInductance'    )
+            Frequency           = row.get('FREQUENCY'          )
 
-            UnitMaster.insert(PartNo, PartName, SingleDualOp, Threading, Lengths, ThreadingGoNoGo,NoLockNuts, NutThickness, NutFlatAcross, PinProtrusion, CabelType,CableLength, Connector1, Connector2, UpperResistance, LowerResistance,UpperVoltage, LowerVoltage, UpperInductance, LowerInductance, Frequency)
+            UnitMaster.insert(PartNo, PartName, SingleDualOp, Threading, Lengths, ThreadingGoNoGo,NoLockNuts, NutThickness, NutFlatAcross, PinProtrusion, CabelType, CableLength, Connector1, Connector2, UpperResistance, LowerResistance, UpperVoltage0kLoad, LowerVoltage0kLoad, UpperVoltage10kLoad, LowerVoltage10kLoad, UpperVoltage3k3Load, LowerVoltage3k3Load, UpperInductance, LowerInductance, Frequency)
 
     def dataAvailable():
         UnitMaster.create()
@@ -231,7 +239,7 @@ class UnitMaster:
     def getDetails(TcNo):
         # Define the SQL command to select data based on TcNo
         select_query = '''
-        SELECT Threading, Lengths, ThreadingGoNoGo, NoLockNuts, NutThickness, NutFlatAcross, PinProtrusion, CabelType, CableLength, Connector1, Connector2 FROM UnitMaster WHERE PartNo = ?;
+        SELECT Threading, Lengths, ThreadingGoNoGo, NoLockNuts, NutThickness, NutFlatAcross, PinProtrusion, CabelType, CableLength, Connector1, Connector2, UpperResistance, LowerResistance, UpperVoltage0kLoad, LowerVoltage0kLoad, UpperVoltage10kLoad, LowerVoltage10kLoad, UpperVoltage3k3Load, LowerVoltage3k3Load, UpperInductance, LowerInductance, FREQUENCY FROM UnitMaster WHERE PartNo = ?;
         '''
 
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -644,7 +652,20 @@ class SaveDetails:
             "CabelType"              : result2[7],
             "CableLength"            : result2[8],
             "Connector1"             : result2[9],
-            "Connector2"             : result2[10]
+            "Connector2"             : result2[10],
+
+            "UpperResistance"        : result2[11],
+            "LowerResistance"        : result2[12],
+            "UpperVoltage0kLoad"     : result2[13],
+            "LowerVoltage0kLoad"     : result2[14],
+            "UpperVoltage10kLoad"    : result2[15],
+            "LowerVoltage10kLoad"    : result2[16],
+            "UpperVoltage3k3Load"    : result2[17],
+            "LowerVoltage3k3Load"    : result2[18],
+            "UpperInductance"        : result2[19], 
+            "LowerInductance"        : result2[20],
+            "FREQUENCY1"             : result2[21]
+
         }
 
         #Save the data dictionary to a JSON file
