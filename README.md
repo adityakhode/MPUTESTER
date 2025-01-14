@@ -42,6 +42,7 @@ source MPUTestKitEnv/bin/activate
 
 ## 3. Install all Requirments
 ```
+sudo apt-get install libcups2-dev #pycups supporting library for printing
 pip install -r requirments.txt
 ```
 

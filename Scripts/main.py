@@ -1,4 +1,6 @@
 from databases import UnitMaster, PartyMaster, ResultMaster, SaveDetails
+from createCertificate import Certificate
+from printerConfig import  PrinterManagerUnix
 import time
 
 start = time.time()
@@ -30,6 +32,11 @@ if __name__ == "__main__":
     #x= resultMaster.getDetails("1234-Twintech" , "TC002")
     #y = UnitMaster.getDetails(12345)
     SaveDetails.jsonFile("1234-Twintech", "TC002", 12345)
+    Certificate()
+    device = PrinterManagerUnix.get_connected_printers()
+    print(device[0])
+    PrinterManagerUnix.print_file("certificate_with_text.png", device[0])
+
 
 
     end = time.time()
