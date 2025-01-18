@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw, ImageFont
-from loadJson import LoadJson
+from loadJson import JsonDataHandler
 import os
 
 class Certificate:
@@ -13,7 +13,7 @@ class Certificate:
         os.makedirs(f"testData/{tc_no}", exist_ok=True)
         self.output_path = f"testData/{tc_no}/{tc_no}.pdf"
 
-        self.data = LoadJson.data()
+        self.data = JsonDataHandler.load_data()
 
         self.fill_details()
         

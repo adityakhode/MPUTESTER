@@ -1,5 +1,5 @@
 import qrcode
-from loadJson import LoadJson
+from loadJson import JsonDataHandler
 import os
 
 class QrCode:
@@ -13,7 +13,7 @@ class QrCode:
 
         #makes testdata/testCertificate number directory
         os.makedirs(f"testData/{tc_no}", exist_ok=True)
-        data = LoadJson.data()
+        data = JsonDataHandler.load_data()
         #qrcode text string
         image_url = f"""Company Name : Twintech Control System Pvt Ltd
         Resistance of 1st Coil {data["Resistance1Value"]   } and status is {data["Resistance1Status"]   }
