@@ -1,17 +1,22 @@
 from PIL import Image, ImageDraw, ImageFont
-import json
-
+from loadJson import LoadJson
+import os
 
 class Certificate:
-    def __init__(self, output_path = "certificate_with_text.png"):
+    def __init__(self, tc_no):
         self.image = Image.open("refrenceMaterial/certificate/certificate.png")
         font_path = "./refrenceMaterial/certificate/Helvetica.ttf"
         self.text_color = (0, 0, 0)  # Black color for the text
         self.font = ImageFont.truetype(font_path, size=35)  # Adjust the size as needed
         self.draw = ImageDraw.Draw(self.image)
-        self.output_path = output_path
-        self.data = self.load_from_json()
+
+        os.makedirs(f"testData/{tc_no}", exist_ok=True)
+        self.output_path = f"testData/{tc_no}/{tc_no}.pdf"
+
+        self.data = LoadJson.data()
+
         self.fill_details()
+        
         self.data = []
 
     def fill_details(self):
@@ -65,15 +70,10 @@ class Certificate:
 
         # Save and show the final certificate
         
-        self.image.save(self.output_path)
+        self.image.save(self.output_path, "PDF")
         #self.image.show()
 
         print(f"Certificate with text saved to: {self.output_path}")
-
-    def load_from_json(self):
-        with open("data.json", "r") as json_file:
-            data = json.load(json_file)
-            return data
 
     # Define a reusable function for placing text
     def add_text(self,position, key, fallback="N/A"):
