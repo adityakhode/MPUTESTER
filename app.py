@@ -1,6 +1,6 @@
 from Scripts.loadJson import JsonDataHandler
-#from Scripts.createCertificate import Certificate
-#from Scripts.qrCode import QrCode
+from Scripts.createCertificate import Certificate
+from Scripts.qrCode import QrCode
 from Scripts.printerConfig import PrinterManagerUnix
 from Scripts.databases import UnitMaster, ResultMaster, PartyMaster
 
@@ -18,7 +18,7 @@ class app:
         result1 = ResultMaster.getDetails("1234-Twintech", "TC002")
         result2 = UnitMaster.getDetails(12345)
         JsonDataHandler.save_data(result1, result2)
-        #Certificate(12345)
-        #QrCode.create(12345)
+        Certificate("TC002")
+        QrCode.create("TC002")
 
 app()

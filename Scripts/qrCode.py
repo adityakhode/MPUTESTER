@@ -1,5 +1,5 @@
 import qrcode
-from loadJson import JsonDataHandler
+from Scripts.loadJson import JsonDataHandler
 import os
 
 class QrCode:

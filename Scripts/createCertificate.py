@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw, ImageFont
-from loadJson import JsonDataHandler
+from Scripts.loadJson import JsonDataHandler
 import os
 
 class Certificate:
