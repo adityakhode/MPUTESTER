@@ -1,4 +1,4 @@
-from databases import UnitMaster, PartyMaster, ResultMaster, SaveDetails
+from partyMaster import UnitMaster, PartyMaster, ResultMaster, SaveDetails
 from createCertificate import Certificate
 from printerConfig import  PrinterManagerUnix
 from qrCode import QrCode
