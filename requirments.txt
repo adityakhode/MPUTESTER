@@ -3,3 +3,4 @@ pillow
 openpyxl
 pycups
 qrcode
+PySide6

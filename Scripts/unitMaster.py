@@ -1,274 +1,155 @@
-import os
-import sqlite3
+from os import path, makedirs
+from sqlite3 import DatabaseError, connect, IntegrityError
 import pandas as pd
 
+
 class UnitMaster:
+    @staticmethod
+    def _get_db_path():
+        """Helper method to get the database path."""
+        base_dir = path.dirname(path.dirname(path.abspath(__file__)))
+        databases_dir = path.join(base_dir, 'Databases')
+        makedirs(databases_dir, exist_ok=True)
+        return path.join(databases_dir, "unitMaster.db")
 
-    def create():
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        databases_dir = os.path.join(base_dir, 'Databases')
-        os.makedirs(databases_dir, exist_ok=True)
-        db_path = os.path.join(databases_dir, "unitMaster.db")
+    @staticmethod
+    def _connect_db():
+        """Helper method to connect to the SQLite database."""
+        db_path = UnitMaster._get_db_path()
+        return connect(db_path)
 
-        # Connect to the SQLite database (creates the file if it doesn't exist)
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-
-        # SQL command to create the UnitMaster table
+    @staticmethod
+    def create() -> None:
+        """Create the UnitMaster table if it doesn't exist."""
         create_table_query = '''
         CREATE TABLE IF NOT EXISTS "UnitMaster" (
-            "PartNo"     INT PRIMARY KEY,
-            "PartName"           VARCHAR,
+            "PartNo"            INT PRIMARY KEY,
+            "PartName"          VARCHAR,
             "SingleDualOp"      SMALLINT,
-            "Threading"          VARCHAR,
+            "Threading"         VARCHAR,
             "Lengths"           SMALLINT,
-            "ThreadingGoNoGo"       CHAR,
+            "ThreadingGoNoGo"   CHAR,
             "NoLockNuts"        SMALLINT,
-            "NutThickness"         FLOAT,
-            "NutFlatAcross"        FLOAT,
-            "PinProtrusion"        FLOAT,
-            "CabelType"          VARCHAR,
-            "CableLength"       SMALLINT,
-            "Connector1"         VARCHAR,
-            "Connector2"         VARCHAR,
-            "UpperResistance"      FLOAT,
-            "LowerResistance"      FLOAT,
-            "UpperVoltage0kLoad"   FLOAT,
-            "LowerVoltage0kLoad"   FLOAT,
-            "UpperVoltage10kLoad"  FLOAT,
-            "LowerVoltage10kLoad"  FLOAT,
-            "UpperVoltage3k3Load"  FLOAT,
-            "LowerVoltage3k3Load"  FLOAT,
-            "UpperInductance"      FLOAT,
-            "LowerInductance"      FLOAT,
-            "FREQUENCY"            FLOAT
+            "NutThickness"      FLOAT,
+            "NutFlatAcross"    FLOAT,
+            "PinProtrusion"    FLOAT,
+            "CabelType"         VARCHAR,
+            "CableLength"      SMALLINT,
+            "Connector1"        VARCHAR,
+            "Connector2"        VARCHAR,
+            "UpperResistance"   FLOAT,
+            "LowerResistance"   FLOAT,
+            "UpperVoltage0kLoad"  FLOAT,
+            "LowerVoltage0kLoad"  FLOAT,
+            "UpperVoltage10kLoad" FLOAT,
+            "LowerVoltage10kLoad" FLOAT,
+            "UpperVoltage3k3Load" FLOAT,
+            "LowerVoltage3k3Load" FLOAT,
+            "UpperInductance"   FLOAT,
+            "LowerInductance"   FLOAT,
+            "FREQUENCY"        FLOAT
         );
         '''
+        with UnitMaster._connect_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute(create_table_query)
+            conn.commit()
 
-        # Execute the SQL command
-        cursor.execute(create_table_query)
-
-        # Commit the transaction and close the connection
-        conn.commit()
-        conn.close()
-
+    @staticmethod
     def insert(*params):
-
-        UnitMaster.create()
-
-        # Ensure the correct number of parameters
+        """Insert a record into the UnitMaster table."""
         if len(params) != 25:
-            raise ValueError("Expected 21 parameters for the UnitMaster table")
+            raise ValueError("Expected 25 parameters for the UnitMaster table")
 
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        databases_dir = os.path.join(base_dir, 'Databases')
-        os.makedirs(databases_dir, exist_ok=True)
-        db_path = os.path.join(databases_dir, "unitMaster.db")
-
-        # Connect to the SQLite database (creates the file if it doesn't exist)
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-
-        # SQL command to insert data into the UnitMaster table
         insert_query = '''
         INSERT INTO "UnitMaster" (
             "PartNo", "PartName", "SingleDualOp", "Threading", "Lengths", "ThreadingGoNoGo",
             "NoLockNuts", "NutThickness", "NutFlatAcross", "PinProtrusion", "CabelType",
             "CableLength", "Connector1", "Connector2", "UpperResistance", "LowerResistance",
-            "UpperVoltage0kLoad", "LowerVoltage0kLoad", "UpperVoltage10kLoad", "LowerVoltage10kLoad", UpperVoltage3k3Load, "LowerVoltage3k3Load", "UpperInductance", "LowerInductance", "FREQUENCY"
+            "UpperVoltage0kLoad", "LowerVoltage0kLoad", "UpperVoltage10kLoad", "LowerVoltage10kLoad",
+            "UpperVoltage3k3Load", "LowerVoltage3k3Load", "UpperInductance", "LowerInductance", "FREQUENCY"
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         '''
-
-        dropQuery = '''
-        DROP TABLE UnitMaster
-        '''
         try:
-            # Execute the SQL command with parameters
-            cursor.execute(insert_query, params)
-        except sqlite3.IntegrityError as e:
-            print("Record already present in unitMaster. Unique constraint violation.")
-            print(f"Error: {e}")
-        except sqlite3.DatabaseError as e:
+            with UnitMaster._connect_db() as conn:
+                cursor = conn.cursor()
+                cursor.execute(insert_query, params)
+                conn.commit()
+        except IntegrityError as e:
+            print(f"Record already present in UnitMaster. Error: {e}")
+        except DatabaseError as e:
             print(f"Database error occurred: {e}")
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
-        finally:
-            # Commit the transaction and close the connection
-            conn.commit()
-            conn.close()
 
+    @staticmethod
     def addData(filename):
-
-        # Reads the data from excel and remove the leading and Trailing whiteSpaces
+        """Add data from an Excel file to the UnitMaster table."""
         data = pd.read_excel(filename)
         data.columns = data.columns.str.strip()
 
-        for index, row in data.iterrows():
-            PartNo = row.get('PartNo')
-            PartName = row.get('PartName')
-            SingleDualOp = row.get('SingleDualOp')
-            Threading = row.get('Threading')
-            Lengths = row.get('Lengths')
-            ThreadingGoNoGo = row.get('ThreadingGoNoGo')
-            NoLockNuts = row.get('NoLockNuts')
-            NutThickness = row.get('NutThickness')
-            NutFlatAcross = row.get('NutFlatAcross')
-            PinProtrusion = row.get('PinProtrusion')
-            CabelType = row.get('CabelType')
-            CableLength = row.get('CableLength')
-            Connector1 = row.get('Connector1')
-            Connector2 = row.get('Connector2')
-            UpperResistance = row.get('UpperResistance')
-            LowerResistance = row.get('LowerResistance')
-            UpperVoltage0kLoad = row.get('UpperVoltage0kLoad')
-            LowerVoltage0kLoad = row.get('LowerVoltage0kLoad')
-            UpperVoltage10kLoad = row.get('UpperVoltage10kLoad')
-            LowerVoltage10kLoad = row.get('LowerVoltage10kLoad')
-            UpperVoltage3k3Load = row.get('UpperVoltage3k3Load')
-            LowerVoltage3k3Load = row.get('LowerVoltage3k3Load')
-            UpperInductance = row.get('UpperInductance')
-            LowerInductance = row.get('LowerInductance')
-            Frequency = row.get('FREQUENCY')
+        for _, row in data.iterrows():
+            params = (
+                row.get('PartNo'), row.get('PartName'), row.get('SingleDualOp'), row.get('Threading'),
+                row.get('Lengths'), row.get('ThreadingGoNoGo'), row.get('NoLockNuts'), row.get('NutThickness'),
+                row.get('NutFlatAcross'), row.get('PinProtrusion'), row.get('CabelType'), row.get('CableLength'),
+                row.get('Connector1'), row.get('Connector2'), row.get('UpperResistance'), row.get('LowerResistance'),
+                row.get('UpperVoltage0kLoad'), row.get('LowerVoltage0kLoad'), row.get('UpperVoltage10kLoad'),
+                row.get('LowerVoltage10kLoad'), row.get('UpperVoltage3k3Load'), row.get('LowerVoltage3k3Load'),
+                row.get('UpperInductance'), row.get('LowerInductance'), row.get('FREQUENCY')
+            )
+            UnitMaster.insert(*params)
 
-            UnitMaster.insert(PartNo, PartName, SingleDualOp, Threading, Lengths, ThreadingGoNoGo, NoLockNuts,
-                              NutThickness, NutFlatAcross, PinProtrusion, CabelType, CableLength, Connector1,
-                              Connector2, UpperResistance, LowerResistance, UpperVoltage0kLoad, LowerVoltage0kLoad,
-                              UpperVoltage10kLoad, LowerVoltage10kLoad, UpperVoltage3k3Load, LowerVoltage3k3Load,
-                              UpperInductance, LowerInductance, Frequency)
+    @staticmethod
+    def dataAvailable():
+        """Check if any data exists in the UnitMaster table."""
+        count_query = 'SELECT COUNT(*) FROM UnitMaster;'
+        with UnitMaster._connect_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute(count_query)
+            result = cursor.fetchone()[0]
+            return result > 0
 
-    def dataAvailable(self):
-        UnitMaster.create()
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        databases_dir = os.path.join(base_dir, 'Databases')
-        os.makedirs(databases_dir, exist_ok=True)
-        db_path = os.path.join(databases_dir, "unitMaster.db")
+    @staticmethod
+    def getPartNo(partNo):
+        """Check if a part number exists in the UnitMaster table."""
+        query = 'SELECT 1 FROM UnitMaster WHERE PartNo = ? LIMIT 1;'
+        with UnitMaster._connect_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, (partNo,))
+            return cursor.fetchone() is not None
 
-        # Connect to the SQLite database (creates the file if it doesn't exist)
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
+    @staticmethod
+    def getPartName(partNo):
+        """Get the part name for a given part number."""
+        query = 'SELECT PartName FROM UnitMaster WHERE PartNo = ?;'
+        with UnitMaster._connect_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, (partNo,))
+            result = cursor.fetchone()
+            return result[0] if result else None
 
-        countQuery = '''
-        SELECT COUNT(*) FROM unitMaster;
-        '''
+    @staticmethod
+    def getPartNoList():
+        """Get a list of all part numbers in the UnitMaster table."""
+        query = 'SELECT PartNo FROM UnitMaster;'
+        with UnitMaster._connect_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query)
+            return [row[0] for row in cursor.fetchall()]
 
-        cursor.execute(countQuery)
-        result = cursor.fetchone()[0]
-
-        conn.commit()
-        conn.close()
-        if result > 0:
-            return True
-        else:
-            return False
-
-    def getPartNo(part_no):
-        UnitMaster.create()
-
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        databases_dir = os.path.join(base_dir, 'Databases')
-        os.makedirs(databases_dir, exist_ok=True)
-        db_path = os.path.join(databases_dir, "unitMaster.db")
-
-        # Connect to the SQLite database (creates the file if it doesn't exist)
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-
-        # Prepare the SQL query to check if the PartNo exists
+    @staticmethod
+    def getDetails(partNo):
+        """Get details for a given part number."""
         query = '''
-        SELECT 1 FROM UnitMaster WHERE PartNo = ? LIMIT 1;
+        SELECT Threading, Lengths, ThreadingGoNoGo, NoLockNuts, NutThickness, NutFlatAcross, PinProtrusion,
+               CabelType, CableLength, Connector1, Connector2, UpperResistance, LowerResistance,
+               UpperVoltage0kLoad, LowerVoltage0kLoad, UpperVoltage10kLoad, LowerVoltage10kLoad,
+               UpperVoltage3k3Load, LowerVoltage3k3Load, UpperInductance, LowerInductance, FREQUENCY
+        FROM UnitMaster WHERE PartNo = ?;
         '''
-
-        # Execute the query with the provided part_no
-        cursor.execute(query, (part_no,))
-        result = cursor.fetchone()
-
-        # Close the database connection
-        conn.close()
-        # Return True if a row is found, otherwise False
-        return result is not None
-
-    def getPartName(part_no):
-        UnitMaster.create()
-
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        databases_dir = os.path.join(base_dir, 'Databases')
-        os.makedirs(databases_dir, exist_ok=True)
-        db_path = os.path.join(databases_dir, "unitMaster.db")
-
-        # Connect to the SQLite database (creates the file if it doesn't exist)
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-
-        # Prepare the SQL query to check if the PartNo exists
-        query = '''
-        SELECT PartName FROM UnitMaster WHERE PartNo = ?;
-        '''
-
-        # Execute the query with the provided part_no
-        cursor.execute(query, (part_no,))
-        result = cursor.fetchone()[0]
-
-        # Close the database connection
-        conn.close()
-        # Return True if a row is found, otherwise False
-        return result
-
-    def getPartNoList(self):
-        UnitMaster.create()
-
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        databases_dir = os.path.join(base_dir, 'Databases')
-        os.makedirs(databases_dir, exist_ok=True)
-        db_path = os.path.join(databases_dir, "unitMaster.db")
-
-        # Connect to the SQLite database (creates the file if it doesn't exist)
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-
-        # Prepare the SQL query to check if the PartNo exists
-        query = '''
-        SELECT PartNo FROM UnitMaster;
-        '''
-
-        # Execute the query with the provided part_no
-        cursor.execute(query)
-        result = cursor.fetchall()
-
-        # Close the database connection
-        conn.close()
-        # Return True if a row is found, otherwise False
-        return result
-
-    def getDetails(TcNo):
-        # Define the SQL command to select data based on TcNo
-        select_query = '''
-        SELECT Threading, Lengths, ThreadingGoNoGo, NoLockNuts, NutThickness, NutFlatAcross, PinProtrusion, CabelType, CableLength, Connector1, Connector2, UpperResistance, LowerResistance, UpperVoltage0kLoad, LowerVoltage0kLoad, UpperVoltage10kLoad, LowerVoltage10kLoad, UpperVoltage3k3Load, LowerVoltage3k3Load, UpperInductance, LowerInductance, FREQUENCY FROM UnitMaster WHERE PartNo = ?;
-        '''
-
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        databases_dir = os.path.join(base_dir, 'Databases')
-        os.makedirs(databases_dir, exist_ok=True)
-        db_path = os.path.join(databases_dir, "unitMaster.db")
-
-        # Connect to the SQLite database (creates the file if it doesn't exist)
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-
-        try:
-            # Execute the SQL command with the parameter
-            cursor.execute(select_query, (TcNo,))
-
-            # Fetch all matching rows
-            results = cursor.fetchall()
-
-            # If no rows are found, return an empty list or appropriate message
-            if not results:
-                return "No records found"
-
-            return results[0]
-        except sqlite3.Error as e:
-            # Handle any SQLite errors
-            return f"An error occurred: {e}"
-        finally:
-            # Close the database connection
-            conn.close()
+        with UnitMaster._connect_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, (partNo,))
+            result = cursor.fetchone()
+            return result if result else "No records found"
