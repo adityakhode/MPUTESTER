@@ -1,0 +1,20 @@
+<RCC>
+  <qresource prefix="header">
+    <file>assets/header.svg</file>
+  </qresource>
+  <qresource prefix="settingsOn">
+    <file>assets/settingsOn.svg</file>
+  </qresource>
+  <qresource prefix="footer">
+    <file>assets/footer.svg</file>
+  </qresource>
+  <qresource prefix="settings">
+    <file>assets/report.svg</file>
+    <file>assets/print.svg</file>
+    <file>assets/power.svg</file>
+    <file>assets/party.svg</file>
+    <file>assets/master.svg</file>
+    <file>assets/close.svg</file>
+    <file>assets/settings.svg</file>
+  </qresource>
+</RCC>

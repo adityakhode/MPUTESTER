@@ -1,5 +1,7 @@
-from PySide6 import QtUiTools  # For loading .ui files
+import sys
+from PySide6 import QtUiTools, QtCore  # For loading .ui files
 from PySide6.QtWidgets import QApplication, QMainWindow, QComboBox, QLabel
+
 
 class MyWindow(QMainWindow):
     def __init__(self):
