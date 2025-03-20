@@ -41,12 +41,12 @@ class app:
         QrCode.create("TC002")
 
         # Set the attribute before creating the QApplication instance
-        QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
-
-        app = QApplication(sys.argv)
-        window = ui_untitled.Ui_MainWindow()
-        window.show()
-        sys.exit(app.exec())
+        # QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
+        #
+        # app = QApplication(sys.argv)
+        # window = ui_untitled.Ui_MainWindow()
+        # window.show()
+        # sys.exit(app.exec())
 
 
 
