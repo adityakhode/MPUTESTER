@@ -10,12 +10,11 @@ from Scripts.loadJson import JsonDataHandler
 from Scripts.createCertificate import Certificate
 from Scripts.printerConfig import PrinterManagerUnix
 
-import os
 import sys
-from Scripts import ui_untitled
-
-from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import Qt
+import frontend.resources
+from PySide6.QtWidgets import QApplication
+from Scripts.frontend import FRONTEND
 
 class app:
     def __init__(self):
@@ -40,13 +39,18 @@ class app:
         Certificate("TC002")
         QrCode.create("TC002")
 
-        # Set the attribute before creating the QApplication instance
-        # QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
-        #
-        # app = QApplication(sys.argv)
-        # window = ui_untitled.Ui_MainWindow()
-        # window.show()
-        # sys.exit(app.exec())
+        QApplication.setAttribute(Qt.AA_ShareOpenGLContexts)
+        app = QApplication(sys.argv)
+
+        # Paths to the .ui and .qrc files
+        ui_file_path = "frontend/v1.ui"
+        qrc_file_path = "frontend/assets.qrc"
+
+        # Create the FRONTEND instance
+        frontend = FRONTEND(ui_file_path, qrc_file_path)
+        frontend.show()
+
+        sys.exit(app.exec())
 
 
 

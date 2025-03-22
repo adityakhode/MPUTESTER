@@ -55,7 +55,7 @@
         <number>2</number>
        </property>
        <item>
-        <widget class="QPushButton" name="pushButton_9">
+        <widget class="QPushButton" name="smallSettingButton">
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -75,7 +75,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="frame_12">
+        <widget class="QFrame" name="dummyFrame">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
@@ -91,7 +91,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="frame_13">
+        <widget class="QFrame" name="dummyFrame_2">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -123,7 +123,7 @@ border-radius:20px;</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_8">
        <item>
-        <widget class="QPushButton" name="pushButton_11">
+        <widget class="QPushButton" name="closeSettingButton">
          <property name="styleSheet">
           <string notr="true">text-align:left;</string>
          </property>
@@ -143,7 +143,7 @@ border-radius:20px;</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_13">
+        <widget class="QPushButton" name="unitmasterUploadButton">
          <property name="styleSheet">
           <string notr="true">text-align:left;
 </string>
@@ -164,7 +164,7 @@ border-radius:20px;</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_15">
+        <widget class="QPushButton" name="partyMasterUploadButton">
          <property name="styleSheet">
           <string notr="true">text-align:left;
 </string>
@@ -185,7 +185,7 @@ border-radius:20px;</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_16">
+        <widget class="QPushButton" name="generatReportButton">
          <property name="styleSheet">
           <string notr="true">text-align:left;</string>
          </property>
@@ -205,7 +205,7 @@ border-radius:20px;</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_17">
+        <widget class="QPushButton" name="configPrinterButton">
          <property name="styleSheet">
           <string notr="true">text-align:left;</string>
          </property>
@@ -225,7 +225,7 @@ border-radius:20px;</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_18">
+        <widget class="QPushButton" name="closeAppButton">
          <property name="styleSheet">
           <string notr="true">text-align:left;
 </string>
@@ -246,7 +246,7 @@ border-radius:20px;</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_19">
+        <widget class="QPushButton" name="poweroffButton">
          <property name="styleSheet">
           <string notr="true">text-align:left;</string>
          </property>
@@ -327,126 +327,14 @@ border-radius:18px;</string>
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
+          <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:5px;</string>
          </property>
          <property name="currentIndex">
-          <number>3</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="welcomePage">
-          <widget class="QLabel" name="label">
-           <property name="geometry">
-            <rect>
-             <x>338</x>
-             <y>252</y>
-             <width>66</width>
-             <height>19</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(249, 240, 107);</string>
-           </property>
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
-          <widget class="QComboBox" name="partNoList">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>252</y>
-             <width>86</width>
-             <height>27</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(143, 240, 164);</string>
-           </property>
-          </widget>
-          <widget class="QFrame" name="frame_86">
-           <property name="geometry">
-            <rect>
-             <x>50</x>
-             <y>80</y>
-             <width>639</width>
-             <height>100</height>
-            </rect>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>100</height>
-            </size>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <widget class="QLabel" name="label_43">
-            <property name="geometry">
-             <rect>
-              <x>110</x>
-              <y>30</y>
-              <width>16</width>
-              <height>50</height>
-             </rect>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>100</height>
-             </size>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::TabFocus</enum>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">border-radius:15px;
-background-color: rgb(153, 193, 241);
-</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="scaledContents">
-             <bool>true</bool>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </widget>
+          <layout class="QGridLayout" name="gridLayout"/>
          </widget>
          <widget class="QWidget" name="entryForm">
           <layout class="QHBoxLayout" name="horizontalLayout">
@@ -466,366 +354,355 @@ background-color: rgb(153, 193, 241);
             <number>0</number>
            </property>
            <item>
-            <widget class="QFrame" name="frame_2">
+            <widget class="QFrame" name="subFrame">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(242, 246, 251);
+</string>
+             </property>
              <property name="frameShape">
               <enum>QFrame::NoFrame</enum>
              </property>
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout_9">
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
               <item>
-               <widget class="QFrame" name="frame_22">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(242, 246, 251);</string>
-                </property>
+               <widget class="QFrame" name="frame_37">
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
                 </property>
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <layout class="QVBoxLayout" name="verticalLayout_10">
                  <item>
-                  <widget class="QFrame" name="frame_37">
+                  <widget class="QFrame" name="frame_23">
                    <property name="frameShape">
                     <enum>QFrame::NoFrame</enum>
                    </property>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_10">
+                   <layout class="QHBoxLayout" name="horizontalLayout_9">
                     <item>
-                     <widget class="QFrame" name="frame_23">
-                      <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                     <widget class="QLabel" name="label_11">
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_9">
-                       <item>
-                        <widget class="QLabel" name="label_11">
-                         <property name="text">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QComboBox" name="comboBox_4">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QFrame" name="frame_24">
-                      <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                     <widget class="QComboBox" name="comboBox_4">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
                       </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_18">
-                       <item>
-                        <widget class="QLabel" name="label_12">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="text">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;TC Number        :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLineEdit" name="lineEdit_6">
-                         <property name="text">
-                          <string>TC1010101</string>
-                         </property>
-                         <property name="alignment">
-                          <set>Qt::AlignCenter</set>
-                         </property>
-                         <property name="placeholderText">
-                          <string>MPU 01</string>
-                         </property>
-                         <property name="clearButtonEnabled">
-                          <bool>false</bool>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QFrame" name="frame_29">
-                      <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_19">
-                       <item>
-                        <widget class="QLabel" name="label_16">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="text">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Part Name        :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLineEdit" name="lineEdit_7">
-                         <property name="text">
-                          <string>MPU 01</string>
-                         </property>
-                         <property name="placeholderText">
-                          <string>MPU 01</string>
-                         </property>
-                         <property name="clearButtonEnabled">
-                          <bool>false</bool>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QFrame" name="frame_30">
-                      <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_20">
-                       <item>
-                        <widget class="QLabel" name="label_17">
-                         <property name="text">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Batch Number     :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLineEdit" name="lineEdit_8">
-                         <property name="placeholderText">
-                          <string>Batch Number</string>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QFrame" name="frame_31">
-                      <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_21">
-                       <item>
-                        <widget class="QLabel" name="label_18">
-                         <property name="text">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Challan Quantity :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLineEdit" name="lineEdit_9">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="placeholderText">
-                          <string>Challan Quantity</string>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
                      </widget>
                     </item>
                    </layout>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QFrame" name="frame_25">
+                  <widget class="QFrame" name="frame_24">
                    <property name="frameShape">
                     <enum>QFrame::NoFrame</enum>
                    </property>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_11">
+                   <layout class="QHBoxLayout" name="horizontalLayout_18">
                     <item>
-                     <widget class="QFrame" name="frame_32">
-                      <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                     <widget class="QLabel" name="label_12">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
                       </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;TC Number        :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_22">
-                       <item>
-                        <widget class="QLabel" name="label_19">
-                         <property name="text">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;TC Date        :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QDateEdit" name="dateEdit_2">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QFrame" name="frame_33">
-                      <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                     <widget class="QLineEdit" name="lineEdit_6">
+                      <property name="text">
+                       <string>TC1010101</string>
                       </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
                       </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_23">
-                       <item>
-                        <widget class="QLabel" name="label_20">
-                         <property name="text">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Part Number    :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QComboBox" name="comboBox_5">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
+                      <property name="placeholderText">
+                       <string>MPU 01</string>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_29">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_19">
+                    <item>
+                     <widget class="QLabel" name="label_16">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Part Name        :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QFrame" name="frame_34">
-                      <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                     <widget class="QLineEdit" name="lineEdit_7">
+                      <property name="text">
+                       <string>MPU 01</string>
                       </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                      <property name="placeholderText">
+                       <string>MPU 01</string>
                       </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_24">
-                       <item>
-                        <widget class="QLabel" name="label_21">
-                         <property name="text">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Challan Number :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLineEdit" name="lineEdit_10">
-                         <property name="text">
-                          <string>TextLabel</string>
-                         </property>
-                         <property name="alignment">
-                          <set>Qt::AlignCenter</set>
-                         </property>
-                         <property name="placeholderText">
-                          <string>MPU 01</string>
-                         </property>
-                         <property name="clearButtonEnabled">
-                          <bool>false</bool>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
+                      <property name="clearButtonEnabled">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_30">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_20">
+                    <item>
+                     <widget class="QLabel" name="label_17">
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Batch Number     :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QFrame" name="frame_35">
-                      <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                     <widget class="QLineEdit" name="lineEdit_8">
+                      <property name="placeholderText">
+                       <string>Batch Number</string>
                       </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_31">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_21">
+                    <item>
+                     <widget class="QLabel" name="label_18">
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Challan Quantity :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_25">
-                       <item>
-                        <widget class="QLabel" name="label_22">
-                         <property name="text">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Part Number    :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QComboBox" name="comboBox_6">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QFrame" name="frame_38">
+                     <widget class="QLineEdit" name="lineEdit_9">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="placeholderText">
+                       <string>Challan Quantity</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="frame_25">
+                <property name="frameShape">
+                 <enum>QFrame::NoFrame</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_11">
+                 <item>
+                  <widget class="QFrame" name="frame_32">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_22">
+                    <item>
+                     <widget class="QLabel" name="label_19">
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;TC Date        :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDateEdit" name="dateEdit_2">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_33">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_23">
+                    <item>
+                     <widget class="QLabel" name="label_20">
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Part Number    :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="comboBox_5">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_34">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_24">
+                    <item>
+                     <widget class="QLabel" name="label_21">
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Challan Number :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="lineEdit_10">
+                      <property name="text">
+                       <string>TextLabel</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                      <property name="placeholderText">
+                       <string>MPU 01</string>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_35">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_25">
+                    <item>
+                     <widget class="QLabel" name="label_22">
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Part Number    :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="comboBox_6">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_38">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_26">
+                    <item>
+                     <widget class="QFrame" name="frame_39">
                       <property name="frameShape">
                        <enum>QFrame::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_26">
-                       <item>
-                        <widget class="QFrame" name="frame_39">
-                         <property name="frameShape">
-                          <enum>QFrame::NoFrame</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QPushButton" name="pushButton_2">
-                         <property name="styleSheet">
-                          <string notr="true">background-color: rgb(45, 168, 72);
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="pushButton_2">
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(45, 168, 72);
 color: rgb(255, 255, 255);</string>
-                         </property>
-                         <property name="text">
-                          <string>Next</string>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
+                      </property>
+                      <property name="text">
+                       <string>Next</string>
+                      </property>
                      </widget>
                     </item>
                    </layout>
@@ -837,25 +714,15 @@ color: rgb(255, 255, 255);</string>
              </layout>
             </widget>
            </item>
-           <item>
-            <widget class="QFrame" name="frame_3">
-             <property name="autoFillBackground">
-              <bool>false</bool>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-            </widget>
-           </item>
           </layout>
          </widget>
          <widget class="QWidget" name="testPage">
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
             <widget class="QFrame" name="frame_41">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
              <property name="frameShape">
               <enum>QFrame::NoFrame</enum>
              </property>
@@ -1378,6 +1245,9 @@ background-color: rgb(0, 255, 0);</string>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
             <widget class="QFrame" name="frame_63">
+             <property name="styleSheet">
+              <string notr="true">border-radius:5px;</string>
+             </property>
              <property name="frameShape">
               <enum>QFrame::NoFrame</enum>
              </property>
@@ -1617,7 +1487,7 @@ border-radius:5px;</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_27">
           <item>
-           <widget class="QLabel" name="label_4">
+           <widget class="QLabel" name="footerLabel">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -1673,7 +1543,7 @@ border-radius:5px;</string>
  </resources>
  <connections>
   <connection>
-   <sender>pushButton_9</sender>
+   <sender>smallSettingButton</sender>
    <signal>clicked()</signal>
    <receiver>expandedSettingFrame</receiver>
    <slot>show()</slot>
@@ -1689,7 +1559,7 @@ border-radius:5px;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_9</sender>
+   <sender>smallSettingButton</sender>
    <signal>clicked()</signal>
    <receiver>hiddenSettingFrame</receiver>
    <slot>hide()</slot>
@@ -1705,7 +1575,7 @@ border-radius:5px;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_11</sender>
+   <sender>closeSettingButton</sender>
    <signal>clicked()</signal>
    <receiver>expandedSettingFrame</receiver>
    <slot>hide()</slot>
@@ -1721,7 +1591,7 @@ border-radius:5px;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_11</sender>
+   <sender>closeSettingButton</sender>
    <signal>clicked()</signal>
    <receiver>hiddenSettingFrame</receiver>
    <slot>show()</slot>
@@ -1739,7 +1609,7 @@ border-radius:5px;</string>
   <connection>
    <sender>pushButton_5</sender>
    <signal>clicked()</signal>
-   <receiver>pushButton_18</receiver>
+   <receiver>closeAppButton</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
