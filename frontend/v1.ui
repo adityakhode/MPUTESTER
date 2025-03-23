@@ -36,10 +36,10 @@
     <item>
      <widget class="QFrame" name="hiddenSettingFrame">
       <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
+       <enum>QFrame::Shape::NoFrame</enum>
       </property>
       <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
+       <enum>QFrame::Shadow::Raised</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <property name="leftMargin">
@@ -63,7 +63,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="MPUTESTER/frontend/assets.qrc">
+          <iconset resource="assets.qrc">
            <normaloff>:/settings/assets/settings.svg</normaloff>:/settings/assets/settings.svg</iconset>
          </property>
          <property name="iconSize">
@@ -83,20 +83,20 @@
           </sizepolicy>
          </property>
          <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+          <enum>QFrame::Shape::NoFrame</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Shadow::Raised</enum>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QFrame" name="dummyFrame_2">
          <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+          <enum>QFrame::Shape::NoFrame</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Shadow::Raised</enum>
          </property>
         </widget>
        </item>
@@ -116,10 +116,10 @@
 border-radius:20px;</string>
       </property>
       <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+       <enum>QFrame::Shape::StyledPanel</enum>
       </property>
       <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
+       <enum>QFrame::Shadow::Raised</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_8">
        <item>
@@ -131,7 +131,7 @@ border-radius:20px;</string>
           <string>Close Settings</string>
          </property>
          <property name="icon">
-          <iconset resource="MPUTESTER/frontend/assets.qrc">
+          <iconset resource="assets.qrc">
            <normaloff>:/settings/assets/settings.svg</normaloff>:/settings/assets/settings.svg</iconset>
          </property>
          <property name="iconSize">
@@ -152,7 +152,7 @@ border-radius:20px;</string>
           <string>Upload UnitMaster</string>
          </property>
          <property name="icon">
-          <iconset resource="MPUTESTER/frontend/assets.qrc">
+          <iconset resource="assets.qrc">
            <normaloff>:/settings/assets/master.svg</normaloff>:/settings/assets/master.svg</iconset>
          </property>
          <property name="iconSize">
@@ -173,7 +173,7 @@ border-radius:20px;</string>
           <string>Upload partyMaster</string>
          </property>
          <property name="icon">
-          <iconset resource="MPUTESTER/frontend/assets.qrc">
+          <iconset resource="assets.qrc">
            <normaloff>:/settings/assets/party.svg</normaloff>:/settings/assets/party.svg</iconset>
          </property>
          <property name="iconSize">
@@ -193,7 +193,7 @@ border-radius:20px;</string>
           <string>Generate Report</string>
          </property>
          <property name="icon">
-          <iconset resource="MPUTESTER/frontend/assets.qrc">
+          <iconset resource="assets.qrc">
            <normaloff>:/settings/assets/report.svg</normaloff>:/settings/assets/report.svg</iconset>
          </property>
          <property name="iconSize">
@@ -213,7 +213,7 @@ border-radius:20px;</string>
           <string>Config.. Printer</string>
          </property>
          <property name="icon">
-          <iconset resource="MPUTESTER/frontend/assets.qrc">
+          <iconset resource="assets.qrc">
            <normaloff>:/settings/assets/print.svg</normaloff>:/settings/assets/print.svg</iconset>
          </property>
          <property name="iconSize">
@@ -234,7 +234,7 @@ border-radius:20px;</string>
           <string>Close app</string>
          </property>
          <property name="icon">
-          <iconset resource="MPUTESTER/frontend/assets.qrc">
+          <iconset resource="assets.qrc">
            <normaloff>:/settings/assets/close.svg</normaloff>:/settings/assets/close.svg</iconset>
          </property>
          <property name="iconSize">
@@ -254,7 +254,7 @@ border-radius:20px;</string>
           <string>Power off</string>
          </property>
          <property name="icon">
-          <iconset resource="MPUTESTER/frontend/assets.qrc">
+          <iconset resource="assets.qrc">
            <normaloff>:/settings/assets/power.svg</normaloff>:/settings/assets/power.svg</iconset>
          </property>
          <property name="iconSize">
@@ -277,10 +277,10 @@ border-radius:20px;</string>
        </sizepolicy>
       </property>
       <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
+       <enum>QFrame::Shape::NoFrame</enum>
       </property>
       <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
+       <enum>QFrame::Shadow::Raised</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_22">
        <item>
@@ -309,10 +309,10 @@ background-color: rgba(0, 0, 0, 0);
 border-radius:18px;</string>
          </property>
          <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+          <enum>QFrame::Shape::NoFrame</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Shadow::Raised</enum>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_7">
           <property name="spacing">
@@ -330,7 +330,7 @@ border-radius:18px;</string>
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="welcomePage"/>
          <widget class="QWidget" name="entryForm">
@@ -353,10 +353,10 @@ border-radius:18px;</string>
            <item>
             <widget class="QFrame" name="subFrame">
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_9">
               <item>
@@ -365,28 +365,28 @@ border-radius:18px;</string>
                  <string notr="true">background-color: rgb(242, 246, 251);</string>
                 </property>
                 <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
+                 <enum>QFrame::Shape::NoFrame</enum>
                 </property>
                 <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
+                 <enum>QFrame::Shadow::Raised</enum>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_8">
                  <item>
                   <widget class="QFrame" name="leftSubFrame">
                    <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
+                    <enum>QFrame::Shape::NoFrame</enum>
                    </property>
                    <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
+                    <enum>QFrame::Shadow::Raised</enum>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_10">
                     <item>
                      <widget class="QFrame" name="nameFrame">
                       <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                       <enum>QFrame::Shape::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_9">
                        <item>
@@ -412,10 +412,10 @@ border-radius:18px;</string>
                     <item>
                      <widget class="QFrame" name="tcNumberFrame">
                       <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                       <enum>QFrame::Shape::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_18">
                        <item>
@@ -437,7 +437,7 @@ border-radius:18px;</string>
                           <string>TC1010101</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                          <property name="placeholderText">
                           <string>MPU 01</string>
@@ -453,10 +453,10 @@ border-radius:18px;</string>
                     <item>
                      <widget class="QFrame" name="partNameFrame">
                       <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                       <enum>QFrame::Shape::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_19">
                        <item>
@@ -491,10 +491,10 @@ border-radius:18px;</string>
                     <item>
                      <widget class="QFrame" name="batchNumberFrame">
                       <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                       <enum>QFrame::Shape::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_20">
                        <item>
@@ -517,10 +517,10 @@ border-radius:18px;</string>
                     <item>
                      <widget class="QFrame" name="challanQuantityFrame">
                       <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                       <enum>QFrame::Shape::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_21">
                        <item>
@@ -552,19 +552,19 @@ border-radius:18px;</string>
                  <item>
                   <widget class="QFrame" name="rightSubFrame">
                    <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
+                    <enum>QFrame::Shape::NoFrame</enum>
                    </property>
                    <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
+                    <enum>QFrame::Shadow::Raised</enum>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_11">
                     <item>
                      <widget class="QFrame" name="tcDateFrame">
                       <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                       <enum>QFrame::Shape::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_22">
                        <item>
@@ -590,10 +590,10 @@ border-radius:18px;</string>
                     <item>
                      <widget class="QFrame" name="partNumberFrame">
                       <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                       <enum>QFrame::Shape::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_23">
                        <item>
@@ -619,10 +619,10 @@ border-radius:18px;</string>
                     <item>
                      <widget class="QFrame" name="challanNumberFrame">
                       <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                       <enum>QFrame::Shape::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_24">
                        <item>
@@ -638,7 +638,7 @@ border-radius:18px;</string>
                           <string>TextLabel</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                          <property name="placeholderText">
                           <string>MPU 01</string>
@@ -654,10 +654,10 @@ border-radius:18px;</string>
                     <item>
                      <widget class="QFrame" name="supplerCodeFrame">
                       <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                       <enum>QFrame::Shape::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_25">
                        <item>
@@ -683,19 +683,19 @@ border-radius:18px;</string>
                     <item>
                      <widget class="QFrame" name="NextButtonFrame">
                       <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                       <enum>QFrame::Shape::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_26">
                        <item>
                         <widget class="QFrame" name="dummyFrame_4">
                          <property name="frameShape">
-                          <enum>QFrame::NoFrame</enum>
+                          <enum>QFrame::Shape::NoFrame</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                         </widget>
                        </item>
@@ -728,10 +728,10 @@ color: rgb(255, 255, 255);</string>
               <bool>false</bool>
              </property>
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
             </widget>
            </item>
@@ -742,10 +742,10 @@ color: rgb(255, 255, 255);</string>
            <item>
             <widget class="QFrame" name="subFrame_3">
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_12">
               <item>
@@ -760,19 +760,19 @@ color: rgb(255, 255, 255);</string>
                  <string notr="true">background-color: rgb(242, 246, 251);</string>
                 </property>
                 <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
+                 <enum>QFrame::Shape::NoFrame</enum>
                 </property>
                 <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
+                 <enum>QFrame::Shadow::Raised</enum>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_30">
                  <item>
                   <widget class="QFrame" name="leftSubFrame_2">
                    <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
+                    <enum>QFrame::Shape::NoFrame</enum>
                    </property>
                    <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
+                    <enum>QFrame::Shadow::Raised</enum>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_13">
                     <item>
@@ -781,28 +781,28 @@ color: rgb(255, 255, 255);</string>
                        <string notr="true"/>
                       </property>
                       <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
+                       <enum>QFrame::Shape::StyledPanel</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_2">
                        <item>
                         <widget class="QFrame" name="voltageSubFrame">
                          <property name="frameShape">
-                          <enum>QFrame::NoFrame</enum>
+                          <enum>QFrame::Shape::NoFrame</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_36">
                           <item>
                            <widget class="QFrame" name="voltageSubFrame_2">
                             <property name="frameShape">
-                             <enum>QFrame::NoFrame</enum>
+                             <enum>QFrame::Shape::NoFrame</enum>
                             </property>
                             <property name="frameShadow">
-                             <enum>QFrame::Raised</enum>
+                             <enum>QFrame::Shadow::Raised</enum>
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_19">
                              <property name="spacing">
@@ -843,13 +843,13 @@ color: rgb(255, 255, 255);</string>
                           <item>
                            <widget class="QFrame" name="voltageStatusFrame">
                             <property name="frameShape">
-                             <enum>QFrame::NoFrame</enum>
+                             <enum>QFrame::Shape::NoFrame</enum>
                             </property>
                             <property name="frameShadow">
-                             <enum>QFrame::Raised</enum>
+                             <enum>QFrame::Shadow::Raised</enum>
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_20">
-                             <item alignment="Qt::AlignRight">
+                             <item alignment="Qt::AlignmentFlag::AlignRight">
                               <widget class="QLabel" name="voltageStatus">
                                <property name="minimumSize">
                                 <size>
@@ -887,7 +887,7 @@ background-color: rgb(0, 255, 0);</string>
                           </sizepolicy>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::Panel</enum>
+                          <enum>QFrame::Shape::Panel</enum>
                          </property>
                          <property name="text">
                           <string>TextLabel</string>
@@ -900,28 +900,28 @@ background-color: rgb(0, 255, 0);</string>
                     <item>
                      <widget class="QFrame" name="inductanceFrame">
                       <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
+                       <enum>QFrame::Shape::StyledPanel</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_3">
                        <item>
                         <widget class="QFrame" name="inductancesubFrame">
                          <property name="frameShape">
-                          <enum>QFrame::NoFrame</enum>
+                          <enum>QFrame::Shape::NoFrame</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_32">
                           <item>
                            <widget class="QFrame" name="inductanceSubFrame">
                             <property name="frameShape">
-                             <enum>QFrame::NoFrame</enum>
+                             <enum>QFrame::Shape::NoFrame</enum>
                             </property>
                             <property name="frameShadow">
-                             <enum>QFrame::Raised</enum>
+                             <enum>QFrame::Shadow::Raised</enum>
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_15">
                              <property name="spacing">
@@ -962,13 +962,13 @@ background-color: rgb(0, 255, 0);</string>
                           <item>
                            <widget class="QFrame" name="inductanceSubFrame_2">
                             <property name="frameShape">
-                             <enum>QFrame::NoFrame</enum>
+                             <enum>QFrame::Shape::NoFrame</enum>
                             </property>
                             <property name="frameShadow">
-                             <enum>QFrame::Raised</enum>
+                             <enum>QFrame::Shadow::Raised</enum>
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_16">
-                             <item alignment="Qt::AlignRight">
+                             <item alignment="Qt::AlignmentFlag::AlignRight">
                               <widget class="QLabel" name="inductanceStatus">
                                <property name="minimumSize">
                                 <size>
@@ -1006,7 +1006,7 @@ background-color: rgb(0, 255, 0);</string>
                           </sizepolicy>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::Panel</enum>
+                          <enum>QFrame::Shape::Panel</enum>
                          </property>
                          <property name="text">
                           <string>TextLabel</string>
@@ -1025,10 +1025,10 @@ background-color: rgb(0, 255, 0);</string>
                        </sizepolicy>
                       </property>
                       <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                       <enum>QFrame::Shape::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                      </widget>
                     </item>
@@ -1048,37 +1048,37 @@ background-color: rgb(0, 255, 0);</string>
                  <item>
                   <widget class="QFrame" name="rightsybFrame">
                    <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
+                    <enum>QFrame::Shape::NoFrame</enum>
                    </property>
                    <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
+                    <enum>QFrame::Shadow::Raised</enum>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_14">
                     <item>
                      <widget class="QFrame" name="resistanceFrame">
                       <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
+                       <enum>QFrame::Shape::StyledPanel</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                       <layout class="QVBoxLayout" name="verticalLayout_4">
                        <item>
                         <widget class="QFrame" name="frame_56">
                          <property name="frameShape">
-                          <enum>QFrame::NoFrame</enum>
+                          <enum>QFrame::Shape::NoFrame</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_35">
                           <item>
                            <widget class="QFrame" name="frame_58">
                             <property name="frameShape">
-                             <enum>QFrame::NoFrame</enum>
+                             <enum>QFrame::Shape::NoFrame</enum>
                             </property>
                             <property name="frameShadow">
-                             <enum>QFrame::Raised</enum>
+                             <enum>QFrame::Shadow::Raised</enum>
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_17">
                              <property name="spacing">
@@ -1088,7 +1088,7 @@ background-color: rgb(0, 255, 0);</string>
                               <number>0</number>
                              </property>
                              <item>
-                              <widget class="QLabel" name="label_25">
+                              <widget class="QLabel" name="resistanceLabel">
                                <property name="sizePolicy">
                                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                                  <horstretch>0</horstretch>
@@ -1101,7 +1101,7 @@ background-color: rgb(0, 255, 0);</string>
                               </widget>
                              </item>
                              <item>
-                              <widget class="QLabel" name="label_26">
+                              <widget class="QLabel" name="resistanceValue">
                                <property name="sizePolicy">
                                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                                  <horstretch>0</horstretch>
@@ -1119,14 +1119,14 @@ background-color: rgb(0, 255, 0);</string>
                           <item>
                            <widget class="QFrame" name="frame_59">
                             <property name="frameShape">
-                             <enum>QFrame::NoFrame</enum>
+                             <enum>QFrame::Shape::NoFrame</enum>
                             </property>
                             <property name="frameShadow">
-                             <enum>QFrame::Raised</enum>
+                             <enum>QFrame::Shadow::Raised</enum>
                             </property>
                             <layout class="QVBoxLayout" name="verticalLayout_18">
-                             <item alignment="Qt::AlignRight">
-                              <widget class="QLabel" name="label_27">
+                             <item alignment="Qt::AlignmentFlag::AlignRight">
+                              <widget class="QLabel" name="resistanceStatus">
                                <property name="minimumSize">
                                 <size>
                                  <width>20</width>
@@ -1155,7 +1155,7 @@ background-color: rgb(0, 255, 0);</string>
                         </widget>
                        </item>
                        <item>
-                        <widget class="QLabel" name="label_6">
+                        <widget class="QLabel" name="resistanceCalculatedValue">
                          <property name="sizePolicy">
                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                            <horstretch>0</horstretch>
@@ -1163,7 +1163,7 @@ background-color: rgb(0, 255, 0);</string>
                           </sizepolicy>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::Panel</enum>
+                          <enum>QFrame::Shape::Panel</enum>
                          </property>
                          <property name="text">
                           <string>TextLabel</string>
@@ -1182,16 +1182,16 @@ background-color: rgb(0, 255, 0);</string>
                        </sizepolicy>
                       </property>
                       <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
+                       <enum>QFrame::Shape::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
+                       <enum>QFrame::Shadow::Raised</enum>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_38"/>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton_20">
+                     <widget class="QPushButton" name="stopButton">
                       <property name="styleSheet">
                        <string notr="true">background-color: rgb(255, 51, 59);</string>
                       </property>
@@ -1215,19 +1215,29 @@ background-color: rgb(0, 255, 0);</string>
                  </sizepolicy>
                 </property>
                 <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
+                 <enum>QFrame::Shape::NoFrame</enum>
                 </property>
                 <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
+                 <enum>QFrame::Shadow::Raised</enum>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_31">
                  <item>
                   <widget class="QFrame" name="dummyFrame_5">
                    <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
+                    <enum>QFrame::Shape::NoFrame</enum>
                    </property>
                    <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
+                    <enum>QFrame::Shadow::Raised</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="backButton">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(45, 168, 72);</string>
+                   </property>
+                   <property name="text">
+                    <string>Back</string>
                    </property>
                   </widget>
                  </item>
@@ -1244,10 +1254,10 @@ background-color: rgb(0, 255, 0);</string>
                  <item>
                   <widget class="QFrame" name="dummyFrame_6">
                    <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
+                    <enum>QFrame::Shape::NoFrame</enum>
                    </property>
                    <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
+                    <enum>QFrame::Shadow::Raised</enum>
                    </property>
                   </widget>
                  </item>
@@ -1264,10 +1274,10 @@ background-color: rgb(0, 255, 0);</string>
            <item>
             <widget class="QFrame" name="frame_63">
              <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
+              <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_21">
               <item>
@@ -1283,19 +1293,19 @@ background-color: rgb(0, 255, 0);</string>
 border-radius:25px;</string>
                 </property>
                 <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
+                 <enum>QFrame::Shape::NoFrame</enum>
                 </property>
                 <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
+                 <enum>QFrame::Shadow::Raised</enum>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_34">
                  <item>
                   <widget class="QFrame" name="frame_9">
                    <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
+                    <enum>QFrame::Shape::StyledPanel</enum>
                    </property>
                    <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
+                    <enum>QFrame::Shadow::Raised</enum>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_5">
                     <item>
@@ -1328,7 +1338,7 @@ border-radius:25px;</string>
                        </size>
                       </property>
                       <property name="layoutDirection">
-                       <enum>Qt::LeftToRight</enum>
+                       <enum>Qt::LayoutDirection::LeftToRight</enum>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">background-color: rgb(45, 168, 72);
@@ -1351,20 +1361,20 @@ border-radius:5px;</string>
                     </sizepolicy>
                    </property>
                    <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
+                    <enum>QFrame::Shape::StyledPanel</enum>
                    </property>
                    <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
+                    <enum>QFrame::Shadow::Raised</enum>
                    </property>
                   </widget>
                  </item>
                  <item>
                   <widget class="QFrame" name="frame_5">
                    <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
+                    <enum>QFrame::Shape::StyledPanel</enum>
                    </property>
                    <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
+                    <enum>QFrame::Shadow::Raised</enum>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_6">
                     <item>
@@ -1419,10 +1429,10 @@ border-radius:5px;</string>
                  </size>
                 </property>
                 <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
+                 <enum>QFrame::Shape::NoFrame</enum>
                 </property>
                 <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
+                 <enum>QFrame::Shadow::Raised</enum>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_3">
                  <item>
@@ -1435,10 +1445,10 @@ border-radius:5px;</string>
                  <item>
                   <widget class="QFrame" name="frame_7">
                    <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
+                    <enum>QFrame::Shape::NoFrame</enum>
                    </property>
                    <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
+                    <enum>QFrame::Shadow::Raised</enum>
                    </property>
                   </widget>
                  </item>
@@ -1452,10 +1462,10 @@ border-radius:5px;</string>
                  <item>
                   <widget class="QFrame" name="frame">
                    <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
+                    <enum>QFrame::Shape::NoFrame</enum>
                    </property>
                    <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
+                    <enum>QFrame::Shadow::Raised</enum>
                    </property>
                   </widget>
                  </item>
@@ -1465,7 +1475,7 @@ border-radius:5px;</string>
                     <string>Exit App</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="MPUTESTER/frontend/assets.qrc">
+                    <iconset resource="assets.qrc">
                      <normaloff>:/settings/assets/close.svg</normaloff>:/settings/assets/close.svg</iconset>
                    </property>
                   </widget>
@@ -1495,10 +1505,10 @@ border-radius:5px;</string>
           </size>
          </property>
          <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+          <enum>QFrame::Shape::NoFrame</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Shadow::Raised</enum>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_27">
           <item>
@@ -1522,10 +1532,10 @@ border-radius:5px;</string>
              </size>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::TabFocus</enum>
+             <enum>Qt::FocusPolicy::TabFocus</enum>
             </property>
             <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
+             <enum>Qt::LayoutDirection::LeftToRight</enum>
             </property>
             <property name="autoFillBackground">
              <bool>false</bool>
@@ -1540,7 +1550,7 @@ border-radius:5px;</string>
              <bool>true</bool>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -1554,7 +1564,7 @@ border-radius:5px;</string>
   </widget>
  </widget>
  <resources>
-  <include location="MPUTESTER/frontend/assets.qrc"/>
+  <include location="assets.qrc"/>
  </resources>
  <connections>
   <connection>

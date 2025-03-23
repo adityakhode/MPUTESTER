@@ -1,9 +1,0 @@
-__pycache__
-Databases/
-Testdata/
-myenv/
-MPUTestKitEnv/
-data.json
-*.png
-*.db
-testData/
