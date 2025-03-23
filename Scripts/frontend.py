@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QPushButton, QStackedWidget
+from PySide6.QtWidgets import QWidget, QPushButton, QStackedWidget, QCheckBox, QComboBox, QDateEdit
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile, QResource
 
@@ -29,13 +29,34 @@ class FRONTEND(QWidget):
 
     def _setup_widgets(self):
         """Connect widgets to class attributes for easy access."""
-        # Example: Assuming you have a QLineEdit named 'lineEdit' in your .ui file
+        # Find the Buttons
+        self.unitMasterUploadButton = self.ui.findChild(QPushButton, "unitMasterUploadButton")
+        self.partyMasterUploadButton = self.ui.findChild(QPushButton, "partyMasterUploadButton")
+        self.generateReportButton = self.ui.findChild(QPushButton, "generateReportButton")
+        self.configPrinterButton = self.ui.findChild(QPushButton, "configPrinterButton")
+        self.closeAppButton = self.ui.findChild(QPushButton, "closeAppButton")
+        self.poweroffButton = self.ui.findChild(QPushButton, "poweroffButton")
 
-
-        # Find the 'nextButton1' button
         self.nextButton1 = self.ui.findChild(QPushButton, "nextButton1")
+
+        self.startButton = self.ui.findChild(QPushButton, "startButton")
+        self.stopButton = self.ui.findChild(QPushButton, "stopButton")
+        self.backButton = self.ui.findChild(QPushButton, "backButton")
         self.nextButton2 = self.ui.findChild(QPushButton, "nextButton2")
+
+        self.pdfButton = self.ui.findChild(QPushButton, "pdfButton")
+        self.testNewSensorButton = self.ui.findChild(QPushButton, "testNewSensorButton")
+
+        self.saveResublCheckBox = self.ui.findChild(QCheckBox, "saveResublCheckBox")
+
         self.stacked_widget = self.ui.findChild(QStackedWidget, "stackedWidget")
+
+        self.nameDropBox = self.ui.findChild(QComboBox, "nameDropBox")
+        self.partNumberDropBox = self.ui.findChild(QComboBox, "partNumberDropBox")
+        self.supplierCodeDropBox = self.ui.findChild(QComboBox, "supplierCodeDropBox")
+
+        self.tcDateInput = self.ui.findChild(QDateEdit, "tcDateInput")
+
         self.stacked_widget.setCurrentIndex(1)
 
     def _connect_signals(self):
