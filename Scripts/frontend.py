@@ -1,7 +1,62 @@
-from PySide6.QtWidgets import QWidget, QPushButton, QStackedWidget, QCheckBox, QComboBox, QDateEdit, QLabel, QLineEdit, QApplication
+from PySide6.QtWidgets import QWidget, QPushButton, QStackedWidget, QCheckBox, QComboBox, QDateEdit, QLabel, QLineEdit, \
+    QApplication, QFrame
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtCore import QFile, QResource
+from PySide6.QtCore import QFile, QResource, QTimer, QEvent, QThread, Signal
 import os
+import serial
+import serial.tools.list_ports
+import time
+
+
+class MeasurementThread(QThread):
+    resistance_updated = Signal(float)
+    connection_error = Signal(str)
+    measurement_complete = Signal()
+
+    def __init__(self, parent=None):
+        super(MeasurementThread, self).__init__(parent)
+        self.esp_serial = None
+        self.single_measurement = True  # Changed to always do a single measurement
+
+    def set_serial(self, serial_connection):
+        self.esp_serial = serial_connection
+
+    def run(self):
+        """Take a single measurement and then stop"""
+        if self.esp_serial and self.esp_serial.is_open:
+            try:
+                # Send command to measure resistance
+                self.esp_serial.write(b"start\n")
+
+                # Wait for data to be available
+                start_time = time.time()
+                response_received = False
+
+                while time.time() - start_time < 5:  # 5 seconds timeout
+                    if self.esp_serial.in_waiting > 0:
+                        response = self.esp_serial.readline().decode('utf-8').strip()
+                        print(f"Received from ESP: {response}")
+
+                        try:
+                            resistance_value = float(response)
+                            self.resistance_updated.emit(resistance_value)
+                            response_received = True
+                            break
+                        except ValueError as e:
+                            print(f"Error parsing resistance value: {e}")
+
+                    self.msleep(100)  # Use QThread's sleep method
+
+                if not response_received:
+                    print("No valid response received from ESP")
+
+            except Exception as e:
+                print(f"Error in measurement thread: {e}")
+                self.connection_error.emit(str(e))
+
+            # Signal that measurement is complete
+            self.measurement_complete.emit()
+
 
 class FRONTEND(QWidget):
     def __init__(self, ui_file_path, qrc_file_path, parent=None):
@@ -13,6 +68,16 @@ class FRONTEND(QWidget):
 
         # Load the .ui file
         self.ui = self._load_ui(ui_file_path)
+
+        # ESP serial connection variables
+        self.esp_serial = None
+        self.esp_port = None
+
+        # Initialize the measurement thread
+        self.measurement_thread = MeasurementThread(self)
+        self.measurement_thread.resistance_updated.connect(self.on_resistance_updated)
+        self.measurement_thread.connection_error.connect(self.on_connection_error)
+        self.measurement_thread.measurement_complete.connect(self.on_measurement_complete)
 
         # Set up widgets and connect signals
         self._setup_widgets()
@@ -64,7 +129,6 @@ class FRONTEND(QWidget):
         self.challanQuantityInput = self.ui.findChild(QLineEdit, "challanQuantityInput")
         self.challanNumberInput = self.ui.findChild(QLineEdit, "challanNumberInput")
 
-
         self.voltageCalculatedValue = self.ui.findChild(QLabel, "voltageCalculatedValue")
         self.resistanceCalculatedValue = self.ui.findChild(QLabel, "resistanceCalculatedValue")
         self.InductanceCalculatedValue = self.ui.findChild(QLabel, "InductanceCalculatedValue")
@@ -77,9 +141,14 @@ class FRONTEND(QWidget):
         self.resistanceStatus = self.ui.findChild(QLabel, "resistanceStatus")
         self.inductanceStatus = self.ui.findChild(QLabel, "inductanceStatus")
 
+        self.expandedSettingFrame = self.ui.findChild(QFrame, "expandedSettingFrame")
+        self.expandedSettingFrame.hide()
+        # Set up initial state
         self.stacked_widget.setCurrentIndex(1)
-
-
+        if self.resistanceCalculatedValue:
+            self.resistanceCalculatedValue.setText("Ready for measurement")
+        if self.stopButton:
+            self.stopButton.setEnabled(False)
 
     def _connect_signals(self):
         """Connect button signals to slots."""
@@ -90,9 +159,9 @@ class FRONTEND(QWidget):
         if self.backButton:
             self.backButton.clicked.connect(self.on_back_button_clicked)
         if self.startButton:
-            pass
+            self.startButton.clicked.connect(self.on_start_button_clicked)
         if self.stopButton:
-            pass
+            self.stopButton.clicked.connect(self.on_stop_button_clicked)
         if self.unitMasterUploadButton:
             self.unitMasterUploadButton.clicked.connect(self.on_unit_master_upload_clicked)
         if self.partyMasterUploadButton:
@@ -100,12 +169,137 @@ class FRONTEND(QWidget):
         if self.generateReportButton:
             self.generateReportButton.clicked.connect(self.on_generate_report_clicked)
         if self.configPrinterButton:
-           self.configPrinterButton.clicked.connect(self.on_config_printer_clicked)
+            self.configPrinterButton.clicked.connect(self.on_config_printer_clicked)
         if self.closeAppButton:
             self.closeAppButton.clicked.connect(self.on_close_app_clicked)
         if self.poweroffButton:
             self.poweroffButton.clicked.connect(self.on_poweroff_clicked)
 
+    def find_esp_device(self):
+        """Find the ESP device connected via USB."""
+        # Common ESP8266/ESP32 USB-to-Serial adapter identifiers
+        esp_identifiers = ['CP210x', 'CH340', 'FTDI', 'Silicon Labs', 'Espressif', 'USB-SERIAL']
+
+        available_ports = list(serial.tools.list_ports.comports())
+
+        for port in available_ports:
+            port_info = f"{port.device} - {port.description}"
+            print(f"Found port: {port_info}")
+
+            # Check if any of the ESP identifiers is in the port description
+            for identifier in esp_identifiers:
+                if (identifier.lower() in port.description.lower() or
+                        (port.manufacturer and identifier.lower() in port.manufacturer.lower())):
+                    print(f"ESP device found on port: {port.device}")
+                    return port.device
+
+        # If no specific ESP identifier found, try to find any likely candidates
+        if available_ports:
+            for port in available_ports:
+                # For Linux systems, ttyUSB and ttyACM are common for ESP devices
+                if 'ttyUSB' in port.device or 'ttyACM' in port.device:
+                    print(f"Possible ESP device found on port: {port.device}")
+                    return port.device
+
+        print("No ESP device found")
+        return None
+
+    def connect_to_esp(self):
+        """Connect to the ESP device."""
+        self.esp_port = self.find_esp_device()
+
+        if self.esp_port:
+            try:
+                # Close existing connection if any
+                if self.esp_serial and self.esp_serial.is_open:
+                    self.esp_serial.close()
+                    self.esp_serial = None
+                    time.sleep(0.5)  # Brief pause before reconnecting
+
+                # Note: Your ESP code uses 9600 baud rate
+                self.esp_serial = serial.Serial(
+                    port=self.esp_port,
+                    baudrate=9600,
+                    timeout=2
+                )
+                print(f"Connected to ESP on port {self.esp_port}")
+
+                # Give the ESP a moment to stabilize after connection
+                time.sleep(1)
+
+                # Clear any pending data
+                self.esp_serial.reset_input_buffer()
+
+                return True
+            except Exception as e:
+                print(f"Error connecting to ESP: {e}")
+                self.esp_serial = None
+                return False
+        else:
+            print("No ESP device found to connect")
+            return False
+
+    def on_resistance_updated(self, value):
+        """Handle resistance value updates from the measurement thread."""
+        self.update_resistance_value(value)
+
+    def on_connection_error(self, error_message):
+        """Handle connection errors from the measurement thread."""
+        print(f"Connection error in thread: {error_message}")
+        if "Input/output error" in error_message:
+            # Try to reconnect
+            QTimer.singleShot(1000, self.try_reconnect)
+
+        # Re-enable the start button in case of error
+        self.startButton.setEnabled(True)
+        self.stopButton.setEnabled(False)
+        self.resistanceCalculatedValue.setText("Error: Check connection")
+
+    def on_measurement_complete(self):
+        """Handle the completion of a measurement."""
+        print("Measurement completed")
+        # Re-enable the start button once measurement is complete
+        self.startButton.setEnabled(True)
+        self.stopButton.setEnabled(False)
+
+    def try_reconnect(self):
+        """Attempt to reconnect to the ESP device."""
+        if self.connect_to_esp():
+            print("Reconnected to ESP device")
+            self.resistanceCalculatedValue.setText("Ready for measurement")
+        else:
+            self.resistanceCalculatedValue.setText("Connection failed")
+
+    def on_start_button_clicked(self):
+        """Handle start button click - Take a single measurement."""
+        print("Start button clicked - Taking a single measurement")
+
+        # Connect to ESP if not already connected
+        if not self.esp_serial or not self.esp_serial.is_open:
+            if not self.connect_to_esp():
+                self.resistanceCalculatedValue.setText("ESP not connected")
+                return
+
+        # Start the measurement thread for a single measurement
+        if not self.measurement_thread.isRunning():
+            self.measurement_thread.set_serial(self.esp_serial)
+            self.measurement_thread.start()
+
+            self.resistanceCalculatedValue.setText("Measuring...")
+            self.startButton.setEnabled(False)
+            self.stopButton.setEnabled(True)
+
+    def on_stop_button_clicked(self):
+        """Handle stop button click."""
+        print("Stop button clicked")
+
+        if self.measurement_thread.isRunning():
+            self.measurement_thread.terminate()  # Forcefully terminate since we're doing single measurements
+            self.measurement_thread.wait()  # Wait for the thread to finish
+
+        self.startButton.setEnabled(True)
+        self.stopButton.setEnabled(True)
+        self.resistanceCalculatedValue.setText("Measurement stopped")
 
     def on_next_button1_clicked(self):
         """Slot for handling the nextButton1 click event."""
@@ -113,29 +307,51 @@ class FRONTEND(QWidget):
         self.stacked_widget.setCurrentIndex(2)
 
     def on_next_button2_clicked(self):
-        """Slot for handling the nextButton1 click event."""
+        """Slot for handling the nextButton2 click event."""
         print("Next button clicked!")
         self.stacked_widget.setCurrentIndex(3)
 
     def on_back_button_clicked(self):
-        """Slot for handling the nextButton1 click event."""
+        """Slot for handling the back button click event."""
         print("Back button clicked!")
         self.stacked_widget.setCurrentIndex(1)
 
     def on_unit_master_upload_clicked(self):
         pass
+
     def on_party_master_upload_clicked(self):
         pass
+
     def on_config_printer_clicked(self):
         pass
+
     def on_generate_report_clicked(self):
         pass
+
     def on_poweroff_clicked(self):
         os.system("poweroff")
     def on_close_app_clicked(self):
+        self.cleanup_resources()
         self.close()
+        QApplication.instance().quit()
 
-        # Getter Methods
+    def cleanup_resources(self):
+        """Clean up resources before exiting."""
+        # Stop the measurement thread
+        if hasattr(self, 'measurement_thread') and self.measurement_thread.isRunning():
+            print("Stopping measurement thread...")
+            self.measurement_thread.terminate()
+            self.measurement_thread.wait()
+
+        # Close the serial connection
+        if self.esp_serial and self.esp_serial.is_open:
+            print("Closing serial connection...")
+            try:
+                self.esp_serial.close()
+            except Exception as e:
+                print(f"Error closing serial connection: {e}")
+
+    # Getter Methods
     def get_tc_number(self):
         return self.tcNumberInput.text()
 
@@ -151,7 +367,7 @@ class FRONTEND(QWidget):
     def get_challan_number(self):
         return self.challanNumberInput.text()
 
-        # Setter Methods
+    # Setter Methods
     def set_tc_number(self, value):
         self.tcNumberInput.setText(value)
 
@@ -167,6 +383,45 @@ class FRONTEND(QWidget):
     def set_challan_number(self, value):
         self.challanNumberInput.setText(value)
 
+    def update_resistance_value(self, value):
+        if self.resistanceCalculatedValue:
+            self.resistanceCalculatedValue.setText(f"{value:.2f} Ω")
+
+            min_resistance = 300  # Example threshold
+            max_resistance = 2000.0  # Example threshold
+
+            if self.resistanceStatus:
+                if min_resistance <= value <= max_resistance:
+                    self.resistanceStatus.setText("PASS")
+                    self.resistanceStatus.setStyleSheet("color: green; font-weight: bold;")
+                else:
+                    self.resistanceStatus.setText("FAIL")
+                    self.resistanceStatus.setStyleSheet("color: red; font-weight: bold;")
+
+
     def show(self):
         """Show the UI."""
         self.ui.show()
+
+# Example usage:
+if __name__ == "__main__":
+    import sys
+
+    app = QApplication(sys.argv)
+
+    # Replace with your actual paths
+    ui_file_path = "your_ui_file.ui"
+    qrc_file_path = "your_resources.qrc"
+
+    # Check if the files exist and provide feedback
+    if not os.path.exists(ui_file_path):
+        print(f"Warning: UI file '{ui_file_path}' not found. Please specify the correct path.")
+
+    if not os.path.exists(qrc_file_path):
+        print(f"Warning: QRC file '{qrc_file_path}' not found. Please specify the correct path.")
+
+    # Create and show the window
+    window = FRONTEND(ui_file_path, qrc_file_path)
+    window.show()
+
+    sys.exit(app.exec())
