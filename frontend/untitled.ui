@@ -331,7 +331,7 @@ border-radius:18px;</string>
 border-radius:5px;</string>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="welcomePage">
           <layout class="QGridLayout" name="gridLayout"/>
@@ -1411,7 +1411,7 @@ border-radius:5px;</string>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_3">
                  <item>
-                  <widget class="QCheckBox" name="checkBox">
+                  <widget class="QCheckBox" name="saveResultCheckBox">
                    <property name="text">
                     <string>Save this result Locally</string>
                    </property>
@@ -1428,7 +1428,7 @@ border-radius:5px;</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="pushButton">
+                  <widget class="QPushButton" name="testNewSensorButton">
                    <property name="text">
                     <string>Test new Sensor</string>
                    </property>

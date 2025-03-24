@@ -1,12 +1,17 @@
-from PySide6.QtWidgets import QWidget, QPushButton, QStackedWidget, QCheckBox, QComboBox, QDateEdit, QLabel, QLineEdit, \
-    QApplication, QFrame
+from PySide6.QtWidgets import QWidget, QPushButton, QStackedWidget, QCheckBox, QComboBox, QDateEdit, QLabel, QLineEdit, QApplication, QFrame
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile, QResource, QTimer, QEvent, QThread, Signal
 import os
 import serial
 import serial.tools.list_ports
 import time
-
+from Scripts.uuidGenerate import generate_7_digit_uuid
+from Scripts.unitMaster import UnitMaster
+from Scripts.partyMaster import PartyMaster
+from Scripts.resultMaster import ResultMaster
+from Scripts.loadJson import JsonDataHandler
+from Scripts.createCertificate import Certificate
+from Scripts.qrCode import QrCode
 
 class MeasurementThread(QThread):
     resistance_updated = Signal(float)
@@ -143,6 +148,14 @@ class FRONTEND(QWidget):
 
         self.expandedSettingFrame = self.ui.findChild(QFrame, "expandedSettingFrame")
         self.expandedSettingFrame.hide()
+
+        self.set_tc_number(generate_7_digit_uuid())
+
+        self.populate_dropdown(self.partNumberDropBox, UnitMaster.getPartNoList())
+        self.populate_dropdown(self.supplierCodeDropBox, PartyMaster.getSupplierCodeList())
+        self.populate_dropdown(self.nameDropBox, PartyMaster.getPartyList())
+
+
         # Set up initial state
         self.stacked_widget.setCurrentIndex(1)
         if self.resistanceCalculatedValue:
@@ -174,6 +187,10 @@ class FRONTEND(QWidget):
             self.closeAppButton.clicked.connect(self.on_close_app_clicked)
         if self.poweroffButton:
             self.poweroffButton.clicked.connect(self.on_poweroff_clicked)
+        if self.testNewSensorButton:
+            self.testNewSensorButton.clicked.connect(self.on_testNewSensorButton_clicked)
+
+        self.partNumberDropBox.currentIndexChanged.connect(self.on_dropBox_change)
 
     def find_esp_device(self):
         """Find the ESP device connected via USB."""
@@ -289,6 +306,10 @@ class FRONTEND(QWidget):
             self.startButton.setEnabled(False)
             self.stopButton.setEnabled(True)
 
+    def on_testNewSensorButton_clicked(self):
+        self.set_tc_number(generate_7_digit_uuid())
+        self.stacked_widget.setCurrentIndex(1)
+
     def on_stop_button_clicked(self):
         """Handle stop button click."""
         print("Stop button clicked")
@@ -302,18 +323,26 @@ class FRONTEND(QWidget):
         self.resistanceCalculatedValue.setText("Measurement stopped")
 
     def on_next_button1_clicked(self):
-        """Slot for handling the nextButton1 click event."""
-        print("Next button clicked!")
         self.stacked_widget.setCurrentIndex(2)
 
     def on_next_button2_clicked(self):
-        """Slot for handling the nextButton2 click event."""
-        print("Next button clicked!")
+        tablename = self.get_supplier_code() + '-' + self.get_partyName()
+        print(tablename)
+        ResultMaster.insert(tablename, self.get_tc_number(), self.get_date(), self.get_part_number(),
+                            self.get_part_name(), self.get_partyName(), self.get_supplier_code(), self.get_batch_number(),
+                            self.get_challan_quantity(), self.get_challan_number(), self.get_date(), self.get_resistance_value(),
+                            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+        result1 = ResultMaster.getDetails(tablename, self.get_tc_number())
+        result2 = UnitMaster.getDetails(self.get_part_number())
+        JsonDataHandler.save_data(result1, result2)
+
+        Certificate(self.get_tc_number())
+        QrCode.create(self.get_tc_number())
+
         self.stacked_widget.setCurrentIndex(3)
 
     def on_back_button_clicked(self):
-        """Slot for handling the back button click event."""
-        print("Back button clicked!")
         self.stacked_widget.setCurrentIndex(1)
 
     def on_unit_master_upload_clicked(self):
@@ -330,6 +359,7 @@ class FRONTEND(QWidget):
 
     def on_poweroff_clicked(self):
         os.system("poweroff")
+
     def on_close_app_clicked(self):
         self.cleanup_resources()
         self.close()
@@ -358,6 +388,9 @@ class FRONTEND(QWidget):
     def get_part_name(self):
         return self.partNameInput.text()
 
+    def get_part_number(self):
+        return self.partNumberDropBox.currentText()
+
     def get_batch_number(self):
         return self.batchNumberInput.text()
 
@@ -366,6 +399,18 @@ class FRONTEND(QWidget):
 
     def get_challan_number(self):
         return self.challanNumberInput.text()
+
+    def get_supplier_code(self):
+        return self.supplierCodeDropBox.currentText()
+
+    def get_partyName(self):
+        return self.nameDropBox.currentText()
+
+    def get_resistance_value(self):
+        return self.resistanceCalculatedValue.text()
+
+    def get_date(self):
+        return self.tcDateInput.date().toString("dd MM yyyy")
 
     # Setter Methods
     def set_tc_number(self, value):
@@ -398,30 +443,17 @@ class FRONTEND(QWidget):
                     self.resistanceStatus.setText("FAIL")
                     self.resistanceStatus.setStyleSheet("color: red; font-weight: bold;")
 
-
     def show(self):
         """Show the UI."""
         self.ui.show()
 
-# Example usage:
-if __name__ == "__main__":
-    import sys
+    def populate_dropdown(self, combo_box, items):
+        combo_box.clear()
 
-    app = QApplication(sys.argv)
+        # Add new items from the list
+        for item in items:
+            combo_box.addItem(str(item))
 
-    # Replace with your actual paths
-    ui_file_path = "your_ui_file.ui"
-    qrc_file_path = "your_resources.qrc"
-
-    # Check if the files exist and provide feedback
-    if not os.path.exists(ui_file_path):
-        print(f"Warning: UI file '{ui_file_path}' not found. Please specify the correct path.")
-
-    if not os.path.exists(qrc_file_path):
-        print(f"Warning: QRC file '{qrc_file_path}' not found. Please specify the correct path.")
-
-    # Create and show the window
-    window = FRONTEND(ui_file_path, qrc_file_path)
-    window.show()
-
-    sys.exit(app.exec())
+    def on_dropBox_change(self):
+        # When the supplier changes, print "Hello World"
+        print("Hello World")

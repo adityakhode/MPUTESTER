@@ -82,3 +82,21 @@ class PartyMaster:
             cursor = conn.cursor()
             cursor.execute(query)
             return cursor.fetchall()
+
+    @staticmethod
+    def getSupplierCodeList():
+        """Get a list of supplier codes and names from the PartyMaster table."""
+        query = 'SELECT SupplierCode FROM PartyMaster;'
+        with PartyMaster._connect_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query)
+            return [row[0] for row in cursor.fetchall()]
+
+    @staticmethod
+    def getPartyList():
+        """Get a list of supplier codes and names from the PartyMaster table."""
+        query = 'SELECT PartyName FROM PartyMaster;'
+        with PartyMaster._connect_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query)
+            return [row[0] for row in cursor.fetchall()]
