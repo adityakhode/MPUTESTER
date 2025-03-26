@@ -153,3 +153,21 @@ class ResultMaster:
 
         for key, value in details.items():
             print(f"{key}: {value}")
+
+    @staticmethod
+    def getTableList():
+        query = r"SELECT NAME FROM SQLITE_MASTER WHERE TYPE = 'TABLE';"
+
+        with ResultMaster._connect_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query)
+            return [row[0] for row in cursor.fetchall()]
+
+    @staticmethod
+    def getTcNoList(tableName):
+        query = f"SELECT * FROM {tableName} WHERE TcNo IS NOT NULL;"
+
+        with ResultMaster._connect_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query)
+            return [row[0] for row in cursor.fetchall()]

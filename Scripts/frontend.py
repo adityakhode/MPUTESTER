@@ -346,16 +346,52 @@ class FRONTEND(QWidget):
         self.stacked_widget.setCurrentIndex(1)
 
     def on_unit_master_upload_clicked(self):
-        pass
+        path = self.selectFile()
+        '''
+        Implement to wignet to warn the 
+        user
+        '''
+        try:
+            UnitMaster.addData(path)
+            '''
+                Add Confirmation
+            '''
+        except:
+            '''
+                Warn the user that data is not added contact administer
+            '''
+            pass
 
     def on_party_master_upload_clicked(self):
-        pass
+        path = self.selectFile()
+        '''
+        Implement to wignet to warn the 
+        user
+        '''
+        try:
+            PartyMaster.addData(path)
+            '''
+                Add Confirmation
+            '''
+        except:
+            '''
+                Warn the user that data is not added contact administer
+            '''
+            pass
 
     def on_config_printer_clicked(self):
         pass
 
     def on_generate_report_clicked(self):
-        pass
+        tableList = ResultMaster.getTableList()
+        tcNoList = ResultMaster.getTcNoList(tablename)
+
+        result1 = ResultMaster.getDetails(tablename, self.get_tc_number())
+        result2 = UnitMaster.getDetails(self.get_part_number())
+        JsonDataHandler.save_data(result1, result2)
+
+        Certificate(self.get_tc_number())
+        QrCode.create(self.get_tc_number())
 
     def on_poweroff_clicked(self):
         os.system("poweroff")
@@ -457,3 +493,20 @@ class FRONTEND(QWidget):
     def on_dropBox_change(self):
         # When the supplier changes, print "Hello World"
         print("Hello World")
+
+    def selectFile(self):
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        filePath, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Select Excel File", "", "Excel Files (*.xlsx *.xls)", options=options)
+        if fileName:
+            print("filename: ", filePath)
+            return filePath
+
+            if os.path.exists(path):
+                os.remove(path)
+            try:
+                result_message = self.db.insertDataFromExcel(fileName)
+                self.AddEditDatabase.setText("Saved Successfully")
+                self.closeDatabaseEdit.setText("Click To Exit")
+            except:
+                    self.show_error_message(result_message)
