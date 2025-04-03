@@ -1,6 +1,7 @@
 import os
 import sqlite3
 import pandas as pd
+from netaddr.ip.iana import query
 
 
 class PartyMaster:
@@ -100,3 +101,12 @@ class PartyMaster:
             cursor = conn.cursor()
             cursor.execute(query)
             return [row[0] for row in cursor.fetchall()]
+
+    @staticmethod
+    def getPartyName(supplierCode):
+        query = 'SELECT PartyName FROM PartyMaster WHERE SupplierCode=? LIMIT 1;'
+        with PartyMaster._connect_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, (supplierCode,))
+            result = cursor.fetchone()
+            return result[0] if result else None

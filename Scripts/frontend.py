@@ -1,8 +1,9 @@
-from PySide6.QtWidgets import QWidget, QPushButton, QStackedWidget, QCheckBox, QComboBox, QDateEdit, QLabel, QLineEdit, QApplication, QFrame
+from PySide6.QtWidgets import QWidget, QPushButton, QStackedWidget, QCheckBox, QComboBox, QDateEdit, QLabel, QLineEdit, QApplication, QFrame, QFileDialog, QMessageBox
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile, QResource, QTimer, QEvent, QThread, Signal
 import os
 import serial
+import shutil
 import serial.tools.list_ports
 import time
 from Scripts.uuidGenerate import generate_7_digit_uuid
@@ -190,8 +191,8 @@ class FRONTEND(QWidget):
         if self.testNewSensorButton:
             self.testNewSensorButton.clicked.connect(self.on_testNewSensorButton_clicked)
 
-        self.partNumberDropBox.currentIndexChanged.connect(self.on_dropBox_change)
-
+        self.partNumberDropBox.currentIndexChanged.connect(self.on_partNumber_dropBox_change)
+        self.supplierCodeDropBox.currentIndexChanged.connect(self.on_supplierCode_dropBox_change)
     def find_esp_device(self):
         """Find the ESP device connected via USB."""
         # Common ESP8266/ESP32 USB-to-Serial adapter identifiers
@@ -307,6 +308,9 @@ class FRONTEND(QWidget):
             self.stopButton.setEnabled(True)
 
     def on_testNewSensorButton_clicked(self):
+        if not self.saveResultCheckBox.isChecked():
+            self.delete_directory(f"testData/{self.get_tc_number()}")
+
         self.set_tc_number(generate_7_digit_uuid())
         self.stacked_widget.setCurrentIndex(1)
 
@@ -346,44 +350,105 @@ class FRONTEND(QWidget):
         self.stacked_widget.setCurrentIndex(1)
 
     def on_unit_master_upload_clicked(self):
-        path = self.selectFile()
-        '''
-        Implement to wignet to warn the 
-        user
-        '''
+        """Handle unit master upload button click with proper error handling"""
         try:
+            # Get file path from user
+            path = self.selectFile()
+            if not path:  # User cancelled file selection
+                return
+
+            # Confirm upload with user
+            confirm = QMessageBox.question(
+                self,
+                "Confirm Upload",
+                f"Are you sure you want to upload data from:\n{path}?",
+                QMessageBox.Yes | QMessageBox.No
+            )
+
+            if confirm != QMessageBox.Yes:
+                return  # User cancelled
+
+            # Attempt to add data
+            os.remove("Databases/unitMaster.db")
+            UnitMaster.create()
             UnitMaster.addData(path)
-            '''
-                Add Confirmation
-            '''
-        except:
-            '''
-                Warn the user that data is not added contact administer
-            '''
-            pass
+
+            # Show success message
+            QMessageBox.information(
+                self,
+                "Success",
+                "Unit master data uploaded successfully!"
+            )
+
+        except PermissionError:
+            QMessageBox.critical(
+                self,
+                "Error",
+                "Permission denied. Please check file access rights."
+            )
+        except Exception as e:
+            # Log the actual error for debugging
+            print(f"Upload error: {str(e)}")
+
+            QMessageBox.critical(
+                self,
+                "Upload Failed",
+                f"Failed to upload unit master data:\n{str(e)}"
+            )
 
     def on_party_master_upload_clicked(self):
-        path = self.selectFile()
-        '''
-        Implement to wignet to warn the 
-        user
-        '''
+        """Handle unit master upload button click with proper error handling"""
         try:
+            # Get file path from user
+            path = self.selectFile()
+            if not path:  # User cancelled file selection
+                return
+
+            # Confirm upload with user
+            confirm = QMessageBox.question(
+                self,
+                "Confirm Upload",
+                f"Are you sure you want to upload data from:\n{path}?",
+                QMessageBox.Yes | QMessageBox.No
+            )
+
+            if confirm != QMessageBox.Yes:
+                return  # User cancelled
+
+            # Attempt to add data
+            os.remove("Databases/partyMaster.db")
+            PartyMaster.create()
             PartyMaster.addData(path)
-            '''
-                Add Confirmation
-            '''
-        except:
-            '''
-                Warn the user that data is not added contact administer
-            '''
-            pass
+
+            # Show success message
+            QMessageBox.information(
+                self,
+                "Success",
+                "Party master data uploaded successfully!"
+            )
+
+        except PermissionError:
+            QMessageBox.critical(
+                self,
+                "Error",
+                "Permission denied. Please check file access rights."
+            )
+        except Exception as e:
+            # Log the actual error for debugging
+            print(f"Upload error: {str(e)}")
+
+            QMessageBox.critical(
+                self,
+                "Upload Failed",
+                f"Failed to upload unit master data:\n{str(e)}"
+            )
 
     def on_config_printer_clicked(self):
         pass
 
     def on_generate_report_clicked(self):
         tableList = ResultMaster.getTableList()
+        tablename = "1234-Twintech"
         tcNoList = ResultMaster.getTcNoList(tablename)
 
         result1 = ResultMaster.getDetails(tablename, self.get_tc_number())
@@ -464,6 +529,14 @@ class FRONTEND(QWidget):
     def set_challan_number(self, value):
         self.challanNumberInput.setText(value)
 
+    def set_nameDropBox(self, value):
+        """Set the dropdown to the specified part number"""
+        index = self.nameDropBox.findText(value)
+        if index >= 0:  # Value exists in dropdown
+            self.nameDropBox.setCurrentIndex(index)
+        else:
+            print(f"Warning: Part number '{value}' not found in dropdown")
+
     def update_resistance_value(self, value):
         if self.resistanceCalculatedValue:
             self.resistanceCalculatedValue.setText(f"{value:.2f} Ω")
@@ -490,23 +563,54 @@ class FRONTEND(QWidget):
         for item in items:
             combo_box.addItem(str(item))
 
-    def on_dropBox_change(self):
-        # When the supplier changes, print "Hello World"
-        print("Hello World")
+    def on_partNumber_dropBox_change(self):
+        partNumber = self.partNumberDropBox.currentText()
+        part_name = UnitMaster.getPartName(partNumber)
+        self.set_part_name(part_name)
 
-    def selectFile(self):
-        options = QtWidgets.QFileDialog.Options()
-        options |= QtWidgets.QFileDialog.DontUseNativeDialog
-        filePath, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Select Excel File", "", "Excel Files (*.xlsx *.xls)", options=options)
-        if fileName:
-            print("filename: ", filePath)
-            return filePath
+    def on_supplierCode_dropBox_change(self):
+        supplier_code = self.supplierCodeDropBox.currentText()
+        party_name = PartyMaster.getPartyName(supplier_code)
+        self.set_nameDropBox(party_name)
 
-            if os.path.exists(path):
-                os.remove(path)
-            try:
-                result_message = self.db.insertDataFromExcel(fileName)
-                self.AddEditDatabase.setText("Saved Successfully")
-                self.closeDatabaseEdit.setText("Click To Exit")
-            except:
-                    self.show_error_message(result_message)
+    def selectFile(parent=None):
+        """
+        Open a file dialog to select an Excel file.
+
+        Args:
+            parent (QWidget, optional): Parent widget for the file dialog
+
+        Returns:
+            str: Path of the selected Excel file, or None if canceled
+
+        Note:
+            Requires QApplication to exist before calling
+        """
+        file_path, _ = QFileDialog.getOpenFileName(
+            parent,
+            "Select Excel File",
+            "",
+            "Excel Files (*.xlsx *.xls);;All Files (*)"
+        )
+        return file_path if file_path else None
+
+    def delete_directory(self, directory_path):
+        """
+        Deletes a directory and all its contents
+
+        Args:
+            directory_path (str): Path to the directory to be deleted
+        Returns:
+            bool: True if deletion was successful, False otherwise
+        """
+        try:
+            if os.path.exists(directory_path):
+                shutil.rmtree(directory_path)
+                print(f"Successfully deleted directory: {directory_path}")
+                return True
+            else:
+                print(f"Directory does not exist: {directory_path}")
+                return False
+        except Exception as e:
+            print(f"Error deleting directory {directory_path}: {e}")
+            return False
