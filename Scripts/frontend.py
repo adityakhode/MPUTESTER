@@ -1,6 +1,6 @@
-from PySide6.QtWidgets import QWidget, QPushButton, QStackedWidget, QCheckBox, QComboBox, QDateEdit, QLabel, QLineEdit, QApplication, QFrame, QFileDialog, QMessageBox
+from PySide6.QtWidgets import QWidget, QPushButton, QStackedWidget, QCheckBox, QComboBox, QDateEdit, QLabel, QLineEdit, QFrame, QFileDialog, QMessageBox
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtCore import QFile, QResource, QTimer, QEvent, QThread, Signal
+from PySide6.QtCore import QFile, QResource, QTimer, QThread, Signal, Qt, QDate
 import os
 import serial
 import shutil
@@ -128,6 +128,7 @@ class FRONTEND(QWidget):
         self.supplierCodeDropBox = self.ui.findChild(QComboBox, "supplierCodeDropBox")
 
         self.tcDateInput = self.ui.findChild(QDateEdit, "tcDateInput")
+        self.tcDateInput.setDate(QDate.currentDate())
 
         self.tcNumberInput = self.ui.findChild(QLineEdit, "tcNumberInput")
         self.partNameInput = self.ui.findChild(QLineEdit, "partNameInput")
@@ -190,9 +191,9 @@ class FRONTEND(QWidget):
             self.poweroffButton.clicked.connect(self.on_poweroff_clicked)
         if self.testNewSensorButton:
             self.testNewSensorButton.clicked.connect(self.on_testNewSensorButton_clicked)
-
         self.partNumberDropBox.currentIndexChanged.connect(self.on_partNumber_dropBox_change)
         self.supplierCodeDropBox.currentIndexChanged.connect(self.on_supplierCode_dropBox_change)
+
     def find_esp_device(self):
         """Find the ESP device connected via USB."""
         # Common ESP8266/ESP32 USB-to-Serial adapter identifiers
@@ -459,12 +460,13 @@ class FRONTEND(QWidget):
         QrCode.create(self.get_tc_number())
 
     def on_poweroff_clicked(self):
-        os.system("poweroff")
+        if self.show_confirmation_dialog("Are you sure you want to power off the system?"):
+            os.system("poweroff")
 
     def on_close_app_clicked(self):
-        self.cleanup_resources()
-        self.close()
-        QApplication.instance().quit()
+        if self.show_confirmation_dialog("Are you sure you want to close the application?"):
+            self.cleanup_resources()
+            self.close()
 
     def cleanup_resources(self):
         """Clean up resources before exiting."""
@@ -614,3 +616,29 @@ class FRONTEND(QWidget):
         except Exception as e:
             print(f"Error deleting directory {directory_path}: {e}")
             return False
+
+
+    def show_confirmation_dialog(self, message, title="Confirmation"):
+        """
+        Show a confirmation dialog with Yes/No buttons.
+
+        Args:
+            message (str): The message to display
+            title (str): The window title (default: "Confirmation")
+
+        Returns:
+            bool: True if Yes clicked, False if No clicked
+        """
+        # Create the message box
+        msg_box = QMessageBox(self)
+        msg_box.setWindowTitle(title)
+        msg_box.setText(message)
+        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg_box.setDefaultButton(QMessageBox.No)
+
+        # Set the window flags to ensure it stays on top
+        msg_box.setWindowFlags(msg_box.windowFlags() | Qt.WindowStaysOnTopHint)
+
+        # Execute the message box and return the result
+        result = msg_box.exec()
+        return result == QMessageBox.Yes
