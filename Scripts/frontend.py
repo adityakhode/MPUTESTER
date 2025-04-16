@@ -31,8 +31,10 @@ class MeasurementThread(QThread):
         """Take a single measurement and then stop"""
         if self.esp_serial and self.esp_serial.is_open:
             try:
+                time.sleep(0.5)
                 # Send command to measure resistance
                 self.esp_serial.write(b"start\n")
+                self.esp_serial.flush()
 
                 # Wait for data to be available
                 start_time = time.time()
@@ -243,11 +245,17 @@ class FRONTEND(QWidget):
                 )
                 print(f"Connected to ESP on port {self.esp_port}")
 
-                # Give the ESP a moment to stabilize after connection
-                time.sleep(1)
+                # Give the ESP more time to stabilize after connection
+                time.sleep(2)  # Increased from 1 to 2 seconds
 
-                # Clear any pending data
+                # Clear any pending data more thoroughly
                 self.esp_serial.reset_input_buffer()
+                self.esp_serial.reset_output_buffer()
+
+                # Send a dummy command to initialize communication
+                self.esp_serial.write(b"\n")
+                time.sleep(0.5)  # Wait for ESP to process
+                self.esp_serial.reset_input_buffer()  # Clear the response
 
                 return True
             except Exception as e:
@@ -257,6 +265,7 @@ class FRONTEND(QWidget):
         else:
             print("No ESP device found to connect")
             return False
+
 
     def on_resistance_updated(self, value):
         """Handle resistance value updates from the measurement thread."""
