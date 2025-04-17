@@ -337,6 +337,8 @@ class FRONTEND(QWidget):
         self.resistanceCalculatedValue.setText("Measurement stopped")
 
     def on_next_button1_clicked(self):
+        paramater_dictionary = UnitMaster.fetch_unit_parameters(self.get_part_number)
+        
         self.stacked_widget.setCurrentIndex(2)
 
     def on_next_button2_clicked(self):

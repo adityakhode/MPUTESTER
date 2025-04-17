@@ -1,59 +1,69 @@
-from PySide6.QtWidgets import QApplication
-import sys
-import time
-from Scripts.hardware import ESPHardware
+# from PySide6.QtWidgets import QApplication
+# import sys
+# import time
+# from Scripts.hardware import ESPHardware
 
 
-def main():
-    # Create QApplication instance (required for QThread)
-    app = QApplication(sys.argv)
+# def main():
+#     # Create QApplication instance (required for QThread)
+#     app = QApplication(sys.argv)
 
-    # Create hardware interface - this will automatically try to connect
-    print("Initializing ESP hardware...")
-    esp = ESPHardware()
+#     # Create hardware interface - this will automatically try to connect
+#     print("Initializing ESP hardware...")
+#     esp = ESPHardware()
 
-    # Wait a moment for connection
-    time.sleep(2)
+#     # Wait a moment for connection
+#     time.sleep(2)
 
-    # Test all functions
-    print("\n--- Testing ESP Functions ---")
+#     # Test all functions
+#     print("\n--- Testing ESP Functions ---")
 
-    # Get resistance
-    print("\nGetting resistance measurement...")
-    resistance = esp.get_resistance()
-    print(f"Resistance: {resistance} ohms")
+#     # Get resistance
+#     print("\nGetting resistance measurement...")
+#     resistance = esp.get_resistance()
+#     print(f"Resistance: {resistance} ohms")
 
-    # Get frequency
-    print("\nGetting frequency measurement...")
-    frequency = esp.get_frequency()
-    print(f"Frequency: {frequency} Hz")
+#     # Get frequency
+#     print("\nGetting frequency measurement...")
+#     frequency = esp.get_frequency()
+#     print(f"Frequency: {frequency} Hz")
 
-    # Get voltage
-    print("\nGetting voltage measurement...")
-    voltage = esp.get_voltage()
-    print(f"Voltage: {voltage} V")
+#     # Get voltage
+#     print("\nGetting voltage measurement...")
+#     voltage = esp.get_voltage()
+#     print(f"Voltage: {voltage} V")
 
-    # Test emergency stop
-    print("\nTesting emergency stop...")
-    esp.emergency_stop()
-    print("Emergency stop activated")
+#     # Test emergency stop
+#     print("\nTesting emergency stop...")
+#     esp.emergency_stop()
+#     print("Emergency stop activated")
 
-    # Try reconnecting
-    print("\nReconnecting...")
-    esp.auto_connect()
+#     # Try reconnecting
+#     print("\nReconnecting...")
+#     esp.auto_connect()
 
-    print("\nAll tests completed")
+#     print("\nAll tests completed")
 
-    # Need to explicitly wait for thread completion before exiting
-    if esp.comm_thread and esp.comm_thread.isRunning():
-        print("Waiting for communication thread to finish...")
-        esp.comm_thread.stop()
-        esp.comm_thread.wait()
+#     # Need to explicitly wait for thread completion before exiting
+#     if esp.comm_thread and esp.comm_thread.isRunning():
+#         print("Waiting for communication thread to finish...")
+#         esp.comm_thread.stop()
+#         esp.comm_thread.wait()
 
-    # Clean up and exit
-    del esp
-    sys.exit(0)
+#     # Clean up and exit
+#     del esp
+#     sys.exit(0)
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
+
+from Scripts.unitMaster import UnitMaster
+
+UnitMaster.create()
+#UnitMaster.addData('refrenceMaterial/unitMaster.xlsx')
+x = UnitMaster.fetch_unit_parameters(12347)
+if x is None:
+    print("efkwenkn")
+else:
+    print(x["LowerVoltage10kLoad"])

@@ -153,3 +153,38 @@ class UnitMaster:
             cursor.execute(query, (partNo,))
             result = cursor.fetchone()
             return result if result else "No records found"
+
+    @staticmethod
+    def fetch_unit_parameters(part_no):
+        # SQL query to fetch the required parameters
+        query = """
+        SELECT 
+            UpperResistance, LowerResistance,
+            UpperVoltage0kLoad, LowerVoltage0kLoad,
+            UpperVoltage10kLoad, LowerVoltage10kLoad,
+            UpperVoltage3k3Load, LowerVoltage3k3Load,
+            UpperInductance, LowerInductance, FREQUENCY
+        FROM UnitMaster
+        WHERE PartNo = ?
+        """
+
+        with UnitMaster._connect_db() as conn:
+            cursor = conn.cursor()
+            # Execute the query
+            cursor.execute(query, (part_no,))
+            result = cursor.fetchone()
+
+
+        # Check if result is not None
+        if result:
+            # Create a dictionary from the result
+            keys = [
+                "UpperResistance", "LowerResistance",
+                "UpperVoltage0kLoad", "LowerVoltage0kLoad",
+                "UpperVoltage10kLoad", "LowerVoltage10kLoad",
+                "UpperVoltage3k3Load", "LowerVoltage3k3Load",
+                "UpperInductance", "LowerInductance", "FREQUENCY"
+                    ]
+            return dict(zip(keys, result))
+        else:
+            return None
