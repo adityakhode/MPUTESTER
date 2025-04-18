@@ -57,8 +57,8 @@ class Certificate:
         self.add_text((1340, 1672), "Voltage2_3k3LoadValue")
 
         # # Frequency values
-        self.add_text((390, 1748), "FREQUENCY1")
-        self.add_text((1290, 1752), "FREQUENCY1")
+        self.add_text((390, 1748), "Frequency1Value")
+        self.add_text((1290, 1752), "Frequency2Value")
 
         # # Inductance
         self.add_text((400, 1825), "Inductance1Value", "NA")

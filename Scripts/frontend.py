@@ -33,7 +33,6 @@ class FRONTEND(QWidget):
         self._setup_widgets()
         self._connect_signals()
 
-
     def _load_ui(self, ui_file_path):
         loader = QUiLoader()
         ui_file = QFile(ui_file_path)
@@ -174,10 +173,47 @@ class FRONTEND(QWidget):
     def on_next_button2_clicked(self):
         tablename = self.get_supplier_code() + '-' + self.get_partyName()
         print(tablename)
-        ResultMaster.insert(tablename, self.get_tc_number(), self.get_date(), self.get_part_number(),
-                            self.get_part_name(), self.get_partyName(), self.get_supplier_code(), self.get_batch_number(),
-                            self.get_challan_quantity(), self.get_challan_number(), self.get_date(), self.get_resistance_value(),
-                            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        data = {
+            "TcNo": self.get_tc_number(),
+            "TcDate": self.get_date(),
+            "PartNo": self.get_part_number(),
+            "PartName": self.get_part_name(),
+            "PartyName": self.get_partyName(),
+            "SupplierCode": self.get_supplier_code(),
+            "BatchNo": self.get_batch_number(),
+            "ChallanQuantity": self.get_challan_quantity(),
+            "ChallanNumber": self.get_challan_number(),
+            "ChallanDate": self.get_date(),
+            # Electrical parameters - using real values where available
+            "Resistance1Value": self.get_resistance_value(),
+            "Resistance1Status": 1,  # Assuming 1 means "OK"
+            # Dummy values for unused measurements
+            "Resistance2Value": 0,
+            "Resistance2Status": 0,
+            "Inductance1Value": 0,
+            "Inductance1Status": 0,
+            "Inductance2Value": 0,
+            "Inductance2Status": 0,
+            "Frequency1Value": self.getter(self.frequencyCalculatedValue),
+            "Frequency2Value": 0,
+            "Voltage1NoLoadValue": self.getter(self.voltageCalculatedValue),
+            "Voltage1NoLoadStatus": 0,
+            "Voltage2NoLoadValue": 0,
+            "Voltage2NoLoadStatus": 0,
+            "Voltage1-10kLoadValue": 0,
+            "Voltage1-10kLoadStatus": 0,
+            "Voltage2-10kLoadValue": 0,
+            "Voltage2-10kLoadStatus": 0,
+            "Voltage1-3k3LoadValue": 0,
+            "Voltage1-3k3LoadStatus": 0,
+            "Voltage2-3k3LoadValue": 0,
+            "Voltage2-3k3LoadStatus": 0
+        }
+        values = []
+        for field in data:
+            if field in data:
+                values.append(data[field])
+        ResultMaster.insert(tablename, *values)
 
         result1 = ResultMaster.getDetails(tablename, self.get_tc_number())
         result2 = UnitMaster.getDetails(self.get_part_number())
@@ -330,6 +366,9 @@ class FRONTEND(QWidget):
     def get_tc_number(self):
         return self.tcNumberInput.text()
 
+    def getter(self, name):
+        return name.text()
+
     def get_part_name(self):
         return self.partNameInput.text()
 
@@ -409,7 +448,6 @@ class FRONTEND(QWidget):
             frequency = esp.get_frequency()
             self.setter(self.frequencyCalculatedValue, str(frequency))
             print(f"Frequency: {frequency} Hz")
-
 
     def populate_dropdown(self, combo_box, items):
         combo_box.clear()
