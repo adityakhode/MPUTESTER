@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QWidget, QPushButton, QStackedWidget, QCheckBox, Q
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile, QResource, QTimer, QThread, Signal, Qt, QDate
 import os
+import subprocess
 import serial
 import shutil
 import serial.tools.list_ports
@@ -148,6 +149,9 @@ class FRONTEND(QWidget):
         self.resistanceStatus = self.ui.findChild(QLabel, "resistanceStatus")
         self.inductanceStatus = self.ui.findChild(QLabel, "inductanceStatus")
 
+        self.qrCodeLabel = self.ui.findChild(QLabel, "qrCodeLabel")
+        self.pdfButton = self.ui.findChild(QPushButton, "pdfButton")
+
         self.expandedSettingFrame = self.ui.findChild(QFrame, "expandedSettingFrame")
         self.expandedSettingFrame.hide()
 
@@ -191,6 +195,8 @@ class FRONTEND(QWidget):
             self.poweroffButton.clicked.connect(self.on_poweroff_clicked)
         if self.testNewSensorButton:
             self.testNewSensorButton.clicked.connect(self.on_testNewSensorButton_clicked)
+        if self.pdfButton:
+            self.pdfButton.clicked.connect(self.pdf_open)
         self.partNumberDropBox.currentIndexChanged.connect(self.on_partNumber_dropBox_change)
         self.supplierCodeDropBox.currentIndexChanged.connect(self.on_supplierCode_dropBox_change)
 
@@ -342,8 +348,9 @@ class FRONTEND(QWidget):
         result2 = UnitMaster.getDetails(self.get_part_number())
         JsonDataHandler.save_data(result1, result2)
 
-        Certificate(self.get_tc_number())
-        QrCode.create(self.get_tc_number())
+        self.pdfPath = Certificate(self.get_tc_number())
+        qrPath = QrCode.create(self.get_tc_number())
+        self.set_qr_code_image(qrPath)
 
         self.stacked_widget.setCurrentIndex(3)
 
@@ -617,7 +624,6 @@ class FRONTEND(QWidget):
             print(f"Error deleting directory {directory_path}: {e}")
             return False
 
-
     def show_confirmation_dialog(self, message, title="Confirmation"):
         """
         Show a confirmation dialog with Yes/No buttons.
@@ -642,3 +648,37 @@ class FRONTEND(QWidget):
         # Execute the message box and return the result
         result = msg_box.exec()
         return result == QMessageBox.Yes
+
+    def set_qr_code_image(self, new_image_path: str) -> bool:
+        """
+        Updates the image of qrCodeLabel by modifying its stylesheet.
+        The image will respect the min-width/min-height set in the stylesheet.
+
+        Args:
+            new_image_path (str): Path to the new image file (PNG, JPG, SVG, etc.)
+
+        Returns:
+            bool: True if successful, False if failed
+        """
+        try:
+            # Verify the image exists first
+            if not os.path.exists(new_image_path):
+                print(f"Error: Image not found at {new_image_path}")
+                return False
+
+            # Update the stylesheet with the new image URL
+            self.qrCodeLabel.setStyleSheet(f"""
+                QLabel {{
+                    image: url({new_image_path});
+                    min-width: 20%;
+                    min-height: 20%;
+                }}
+            """)
+
+            return True
+        except Exception as e:
+            print(f"Error updating QR code image: {e}")
+            return False
+
+    def pdf_open(self):
+        subprocess.run(["xdg-open", f"./testData/{self.get_tc_number()}/{self.get_tc_number()}.pdf"], check=True)

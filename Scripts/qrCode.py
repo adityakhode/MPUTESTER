@@ -20,22 +20,22 @@ class QrCode:
 
             # Construct the QR code text
             qrText = f"""
-            Company Name: Twintech Control System Pvt Ltd
-            Resistance of 1st Coil: {data["Resistance1Value"]} and status is {data["Resistance1Status"]}
-            Resistance of 2nd Coil: {data["Resistance2Value"]} and status is {data["Resistance2Status"]}
-            Inductance of 1st Coil: {data["Inductance1Value"]} and status is {data["Inductance1Status"]}
-            Inductance of 2nd Coil: {data["Inductance2Value"]} and status is {data["Inductance2Status"]}
-            Voltage of 1st Coil: {data["Voltage1NoLoadValue"]} and status is {data["Voltage1NoLoadStatus"]}
-            Voltage of 2nd Coil: {data["Voltage2NoLoadValue"]} and status is {data["Voltage2NoLoadStatus"]}
-            Frequency of 1st Coil: {data["Frequency1Value"]} and status is {data["Frequency2Value"]}
-            Frequency of 2nd Coil: {data["Frequency1Value"]} and status is {data["Frequency2Value"]}
+            Result
+            R1: {data["Resistance1Value"]}Ω {data["Resistance1Status"]}
+            R2: {data["Resistance2Value"]}Ω {data["Resistance2Status"]}
+            I1: {data["Inductance1Value"]}L {data["Inductance1Status"]}
+            I2: {data["Inductance2Value"]}L {data["Inductance2Status"]}
+            V1: {data["Voltage1NoLoadValue"]}V {data["Voltage1NoLoadStatus"]}
+            V2: {data["Voltage2NoLoadValue"]}V {data["Voltage2NoLoadStatus"]}
+            F1: {data["Frequency1Value"]}Hz
+            F1: {data["Frequency2Value"]}Hz
             """
 
             # Configure QR code
             qr = qrcode.QRCode(
-                version=10,  # Adjust version for data size
-                box_size=5,  # Adjust box size for visual appeal
-                border=4,    # Border size
+                version=3,  # Adjust version for data size
+                box_size=4,  # Adjust box size for visual appeal
+                border=1,    # Border size
             )
             qr.add_data(qrText)
             qr.make(fit=True)
@@ -52,3 +52,5 @@ class QrCode:
             print(f"Error: Data too large for QR code. {e}")
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
+
+        return f"testData/{tcNo}/{tcNo}.png"

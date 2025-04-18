@@ -75,6 +75,8 @@ class Certificate:
 
         print(f"Certificate with text saved to: {self.output_path}")
 
+        return self.output_path
+
     # Define a reusable function for placing text
     def add_text(self,position, key, fallback="N/A"):
         text = str(self.data.get(key, fallback))
