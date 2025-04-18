@@ -1,0 +1,7 @@
+# created by virtualenv automatically
+.venv/*
+Databases/*
+.idea/
+Scripts/__pycache__/
+frontend/__pycache__/
+testData/*

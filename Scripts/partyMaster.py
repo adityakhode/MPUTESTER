@@ -1,8 +1,6 @@
 import os
 import sqlite3
 import pandas as pd
-from netaddr.ip.iana import query
-
 
 class PartyMaster:
     @staticmethod
