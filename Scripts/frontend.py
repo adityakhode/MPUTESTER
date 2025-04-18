@@ -33,6 +33,7 @@ class FRONTEND(QWidget):
         self._setup_widgets()
         self._connect_signals()
 
+
     def _load_ui(self, ui_file_path):
         loader = QUiLoader()
         ui_file = QFile(ui_file_path)
@@ -389,9 +390,6 @@ class FRONTEND(QWidget):
         esp = ESPHardware()
         #Wait a moment for connection
         time.sleep(2)
-
-        # Test all functions
-        print("\n--- Testing ESP Functions ---")
 
         # Get resistance
         print("\nGetting resistance measurement...")
