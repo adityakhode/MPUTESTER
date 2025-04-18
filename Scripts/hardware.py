@@ -2,7 +2,7 @@
 import serial
 import serial.tools.list_ports
 import time
-from PySide6.QtCore import QThread, Signal, QObject, QMutex, QWaitCondition
+from PySide6.QtCore import QThread, Signal, QObject, QMutex, QWaitCondition, QEventLoop, QTimer
 
 
 class ESPCommunicationThread(QThread):
@@ -83,7 +83,7 @@ class ESPCommunicationThread(QThread):
                     response = self._serial_connection.readline().decode().strip()
                     print(f"Received response: {response}")
                     self._process_response(command, response)
-                    return
+                    return response
                 time.sleep(0.1)
 
             # If we get here, we timed out waiting for response
@@ -282,90 +282,114 @@ class ESPHardware(QObject):
         if not self._check_connection():
             return None
 
-        # Reset the value before requesting new data
-        self.data_mutex.lock()
-        self.resistance_value = None
-        self.data_mutex.unlock()
+        # Create a single-shot measurement with event loop
+        loop = QEventLoop()
+        result = [None]  # Use a list to store the result
+
+        # Setup a temporary signal handler that will exit the event loop
+        def on_resistance(value):
+            result[0] = value
+            loop.quit()
+
+        # Connect the signal temporarily
+        self.comm_thread.resistance_signal.connect(on_resistance)
+
+        # Set a timeout
+        timer = QTimer()
+        timer.setSingleShot(True)
+        timer.timeout.connect(loop.quit)
+        timer.start(3000)  # 3 second timeout
 
         # Send command to ESP
         self.comm_thread.add_command("GET_RESISTANCE")
 
-        # Wait for response with timeout
-        start_time = time.time()
-        timeout = 3.0  # 3 seconds timeout
+        # Wait for either the signal or timeout
+        loop.exec()
 
-        while time.time() - start_time < timeout:
-            self.data_mutex.lock()
-            if self.resistance_value is not None:
-                result = self.resistance_value
-                self.resistance_value = None  # Reset for next measurement
-                self.data_mutex.unlock()
-                return result
-            self.data_mutex.unlock()
-            time.sleep(0.1)
+        # Clean up
+        self.comm_thread.resistance_signal.disconnect(on_resistance)
+        timer.stop()
 
-        print("Timeout waiting for resistance value")
-        return None
+        if result[0] is None:
+            print("Timeout waiting for resistance value")
+
+        return result[0]
 
     def get_frequency(self):
         """Get frequency measurement from ESP"""
         if not self._check_connection():
             return None
 
-        # Reset the value before requesting new data
-        self.data_mutex.lock()
-        self.frequency_value = None
-        self.data_mutex.unlock()
+        # Create a single-shot measurement with event loop
+        loop = QEventLoop()
+        result = [None]  # Use a list to store the result
+
+        # Setup a temporary signal handler that will exit the event loop
+        def on_frequency(value):
+            result[0] = value
+            loop.quit()
+
+        # Connect the signal temporarily
+        self.comm_thread.frequency_signal.connect(on_frequency)
+
+        # Set a timeout
+        timer = QTimer()
+        timer.setSingleShot(True)
+        timer.timeout.connect(loop.quit)
+        timer.start(3000)  # 3 second timeout
 
         # Send command to ESP
         self.comm_thread.add_command("GET_FREQUENCY")
 
-        # Wait for response with timeout
-        start_time = time.time()
-        timeout = 3.0  # 3 seconds timeout
+        # Wait for either the signal or timeout
+        loop.exec()
 
-        while time.time() - start_time < timeout:
-            self.data_mutex.lock()
-            if self.frequency_value is not None:
-                result = self.frequency_value
-                self.frequency_value = None  # Reset for next measurement
-                self.data_mutex.unlock()
-                return result
-            self.data_mutex.unlock()
-            time.sleep(0.1)
+        # Clean up
+        self.comm_thread.frequency_signal.disconnect(on_frequency)
+        timer.stop()
 
-        print("Timeout waiting for frequency value")
-        return None
+        if result[0] is None:
+            print("Timeout waiting for frequency value")
+
+        return result[0]
 
     def get_voltage(self):
         """Get voltage measurement from ESP"""
         if not self._check_connection():
             return None
 
-        # Reset the value before requesting new data
-        self.data_mutex.lock()
-        self.voltage_value = None
-        self.data_mutex.unlock()
+        # Create a single-shot measurement with event loop
+        loop = QEventLoop()
+        result = [None]  # Use a list to store the result
+
+        # Setup a temporary signal handler that will exit the event loop
+        def on_voltage(value):
+            result[0] = value
+            loop.quit()
+
+        # Connect the signal temporarily
+        self.comm_thread.voltage_signal.connect(on_voltage)
+
+        # Set a timeout
+        timer = QTimer()
+        timer.setSingleShot(True)
+        timer.timeout.connect(loop.quit)
+        timer.start(3000)  # 3 second timeout
 
         # Send command to ESP
         self.comm_thread.add_command("GET_VOLTAGE")
 
-        # Wait for response with timeout
-        start_time = time.time()
-        timeout = 3.0  # 3 seconds timeout
+        # Wait for either the signal or timeout
+        loop.exec()
 
-        while time.time() - start_time < timeout:
-            self.data_mutex.lock()
-            if self.voltage_value is not None:
-                result = self.voltage_value
-                self.voltage_value = None  # Reset for next measurement
-                self.data_mutex.unlock()
-                return result
-            self.data_mutex.unlock()
-            time.sleep(0.1)
+        # Clean up
+        self.comm_thread.voltage_signal.disconnect(on_voltage)
+        timer.stop()
 
-        print("Timeout waiting for voltage value")
-        return None
+        if result[0] is None:
+            print("Timeout waiting for voltage value")
+
+        return result[0]
 
     def emergency_stop(self):
         """Emergency stop all operations"""

@@ -396,20 +396,20 @@ class FRONTEND(QWidget):
         # Get resistance
         print("\nGetting resistance measurement...")
         resistance = esp.get_resistance()
-        self.setter(self.resistanceCalculatedValue, resistance)
+        self.setter(self.resistanceCalculatedValue, str(resistance))
         print(f"Resistance: {resistance} ohms")
 
         if self.show_confirmation_dialog("Press Continue to calculate more param"):
             # Get voltage
             print("\nGetting voltage measurement...")
             voltage = esp.get_voltage()
-            self.setter(self.voltageCalculatedValue, voltage)
+            self.setter(self.voltageCalculatedValue, str(voltage))
             print(f"Voltage: {voltage} V")
 
              # Get frequency
             print("\nGetting frequency measurement...")
             frequency = esp.get_frequency()
-            self.setter(self.frequencyCalculatedValue, frequency)
+            self.setter(self.frequencyCalculatedValue, str(frequency))
             print(f"Frequency: {frequency} Hz")
 
 
