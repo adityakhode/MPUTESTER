@@ -82,11 +82,11 @@ class FRONTEND(QWidget):
 
         self.voltageCalculatedValue = self.ui.findChild(QLabel, "voltageCalculatedValue")
         self.resistanceCalculatedValue = self.ui.findChild(QLabel, "resistanceCalculatedValue")
-        self.InductanceCalculatedValue = self.ui.findChild(QLabel, "InductanceCalculatedValue")
+        self.frequencyCalculatedValue = self.ui.findChild(QLabel, "frequencyCalculatedValue")
 
         self.voltageValue = self.ui.findChild(QLabel, "voltageValue")
         self.resistanceValue = self.ui.findChild(QLabel, "resistanceValue")
-        self.inductanceValue = self.ui.findChild(QLabel, "inductanceValue")
+        self.frequencyValue = self.ui.findChild(QLabel, "frequencyValue")
 
         self.voltageStatus = self.ui.findChild(QLabel, "voltageStatus")
         self.resistanceStatus = self.ui.findChild(QLabel, "resistanceStatus")
@@ -98,7 +98,7 @@ class FRONTEND(QWidget):
         self.expandedSettingFrame = self.ui.findChild(QFrame, "expandedSettingFrame")
         self.expandedSettingFrame.hide()
 
-        self.set_tc_number(generate_7_digit_uuid())
+        self.setter(self.tcNumberInput, generate_7_digit_uuid())
 
         self.populate_dropdown(self.partNumberDropBox, UnitMaster.getPartNoList())
         self.populate_dropdown(self.supplierCodeDropBox, PartyMaster.getSupplierCodeList())
@@ -147,7 +147,8 @@ class FRONTEND(QWidget):
         if not self.saveResultCheckBox.isChecked():
             self.delete_directory(f"testData/{self.get_tc_number()}")
 
-        self.set_tc_number(generate_7_digit_uuid())
+        self.setter(self.tcNumberInput, generate_7_digit_uuid())
+
         self.stacked_widget.setCurrentIndex(1)
 
     def on_stop_button_clicked(self):
@@ -160,7 +161,13 @@ class FRONTEND(QWidget):
 
     def on_next_button1_clicked(self):
         paramater_dictionary = UnitMaster.fetch_unit_parameters(int(self.get_part_number()))
-        print(paramater_dictionary)
+
+        self.setter(self.resistanceValue,
+                    f'Resistance: {paramater_dictionary["LowerResistance"]} - {paramater_dictionary["UpperResistance"]}Ω')
+        self.setter(self.voltageValue,
+                    f'Voltage: {paramater_dictionary["LowerVoltage0kLoad"]} - {paramater_dictionary["UpperVoltage0kLoad"]}V')
+        self.setter(self.frequencyValue,
+                    f'Frequency: {paramater_dictionary["FREQUENCY"]} - {paramater_dictionary["FREQUENCY"]}Hz')
         self.stacked_widget.setCurrentIndex(2)
 
     def on_next_button2_clicked(self):
@@ -350,11 +357,11 @@ class FRONTEND(QWidget):
         return self.tcDateInput.date().toString("dd MM yyyy")
 
     # Setter Methods
-    def set_tc_number(self, value):
-        self.tcNumberInput.setText(value)
-
     def set_part_name(self, value):
         self.partNameInput.setText(value)
+
+    def setter(self, name, value):
+        name.setText(value)
 
     def set_batch_number(self, value):
         self.batchNumberInput.setText(value)
@@ -373,6 +380,7 @@ class FRONTEND(QWidget):
         else:
             print(f"Warning: Part number '{value}' not found in dropdown")
 
+
     def show(self):
         """Show the UI."""
         self.ui.show()
@@ -388,17 +396,20 @@ class FRONTEND(QWidget):
         # Get resistance
         print("\nGetting resistance measurement...")
         resistance = esp.get_resistance()
+        self.setter(self.resistanceCalculatedValue, resistance)
         print(f"Resistance: {resistance} ohms")
 
         if self.show_confirmation_dialog("Press Continue to calculate more param"):
             # Get voltage
             print("\nGetting voltage measurement...")
             voltage = esp.get_voltage()
+            self.setter(self.voltageCalculatedValue, voltage)
             print(f"Voltage: {voltage} V")
 
              # Get frequency
             print("\nGetting frequency measurement...")
             frequency = esp.get_frequency()
+            self.setter(self.frequencyCalculatedValue, frequency)
             print(f"Frequency: {frequency} Hz")
 
 
