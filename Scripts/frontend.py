@@ -1,18 +1,20 @@
-from PySide6.QtWidgets import QWidget, QPushButton, QStackedWidget, QCheckBox, QComboBox, QDateEdit, QLabel, QLineEdit, QFrame, QFileDialog, QMessageBox
-from PySide6.QtUiTools import QUiLoader
+from PySide6.QtWidgets import (QWidget, QPushButton, QStackedWidget,
+                               QCheckBox, QComboBox, QDateEdit, QLabel,
+                               QLineEdit, QFrame, QFileDialog, QMessageBox)
 from PySide6.QtCore import QFile, QResource, Qt, QDate
-import os
+from Scripts.uuidGenerate import generate_7_digit_uuid
+from Scripts.createCertificate import Certificate
+from Scripts.resultMaster import ResultMaster
+from Scripts.loadJson import JsonDataHandler
+from Scripts.partyMaster import PartyMaster
+from Scripts.unitMaster import UnitMaster
+from Scripts.hardware import ESPHardware
+from PySide6.QtUiTools import QUiLoader
+from Scripts.qrCode import QrCode
 import subprocess
 import shutil
 import time
-from Scripts.uuidGenerate import generate_7_digit_uuid
-from Scripts.unitMaster import UnitMaster
-from Scripts.partyMaster import PartyMaster
-from Scripts.resultMaster import ResultMaster
-from Scripts.loadJson import JsonDataHandler
-from Scripts.createCertificate import Certificate
-from Scripts.qrCode import QrCode
-from Scripts.hardware import ESPHardware
+import os
 
 class FRONTEND(QWidget):
     def __init__(self, ui_file_path, qrc_file_path, parent=None):
@@ -142,10 +144,11 @@ class FRONTEND(QWidget):
             self.pdfButton.clicked.connect(self.pdf_open)
         self.partNumberDropBox.currentIndexChanged.connect(self.on_partNumber_dropBox_change)
         self.supplierCodeDropBox.currentIndexChanged.connect(self.on_supplierCode_dropBox_change)
+        self.nameDropBox.currentIndexChanged.connect(self.on_partyName_dropBox_change)
 
     def on_testNewSensorButton_clicked(self):
         if not self.saveResultCheckBox.isChecked():
-            self.delete_directory(f"testData/{self.get_tc_number()}")
+            self.delete_directory(f"testData/{self.getter(self.tcNumberInput)}")
 
         self.setter(self.tcNumberInput, generate_7_digit_uuid())
 
@@ -160,54 +163,57 @@ class FRONTEND(QWidget):
         self.resistanceCalculatedValue.setText("Measurement stopped")
 
     def on_next_button1_clicked(self):
-        paramater_dictionary = UnitMaster.fetch_unit_parameters(int(self.get_part_number()))
+        self.paramater_dictionary = UnitMaster.fetch_unit_parameters(int(self.getDropBox(self.partNumberDropBox)))
 
         self.setter(self.resistanceValue,
-                    f'Resistance: {paramater_dictionary["LowerResistance"]} - {paramater_dictionary["UpperResistance"]}Ω')
+                    f'Resistance: {self.paramater_dictionary["LowerResistance"]} - {self.paramater_dictionary["UpperResistance"]}Ω')
         self.setter(self.voltageValue,
-                    f'Voltage: {paramater_dictionary["LowerVoltage0kLoad"]} - {paramater_dictionary["UpperVoltage0kLoad"]}V')
+                    f'Voltage: {self.paramater_dictionary["LowerVoltage0kLoad"]} - {self.paramater_dictionary["UpperVoltage0kLoad"]}V')
         self.setter(self.frequencyValue,
-                    f'Frequency: {paramater_dictionary["FREQUENCY"]} - {paramater_dictionary["FREQUENCY"]}Hz')
+                    f'Frequency: {self.paramater_dictionary["FREQUENCY"]} - {self.paramater_dictionary["FREQUENCY"]}Hz')
         self.stacked_widget.setCurrentIndex(2)
 
+    def status(self):
+        resistance = self.getter(self.resistanceCalculatedValue)
+
     def on_next_button2_clicked(self):
-        tablename = self.get_supplier_code() + '-' + self.get_partyName()
-        print(tablename)
+        print(self.getter(self.resistanceCalculatedValue))
+        tablename = self.getDropBox(self.supplierCodeDropBox) + '-' + self.get_partyName()
         data = {
-            "TcNo": self.get_tc_number(),
+            "TcNo": self.getter(self.tcNumberInput),
             "TcDate": self.get_date(),
-            "PartNo": self.get_part_number(),
-            "PartName": self.get_part_name(),
+            "PartNo": self.getDropBox(self.partNumberDropBox),
+            "PartName": self.getter(self.partNameInput),
             "PartyName": self.get_partyName(),
-            "SupplierCode": self.get_supplier_code(),
-            "BatchNo": self.get_batch_number(),
-            "ChallanQuantity": self.get_challan_quantity(),
-            "ChallanNumber": self.get_challan_number(),
+            "SupplierCode": self.getDropBox(self.supplierCodeDropBox),
+            "BatchNo": self.getter(self.batchNumberInput),
+            "ChallanQuantity": self.getter(self.challanQuantityInput),
+            "ChallanNumber": self.getter(self.challanNumberInput),
             "ChallanDate": self.get_date(),
             # Electrical parameters - using real values where available
-            "Resistance1Value": self.get_resistance_value(),
-            "Resistance1Status": 1,  # Assuming 1 means "OK"
+            "Resistance1Value": self.getter(self.resistanceCalculatedValue),
+            "Resistance1Status": "N.A",
             # Dummy values for unused measurements
-            "Resistance2Value": 0,
-            "Resistance2Status": 0,
-            "Inductance1Value": 0,
-            "Inductance1Status": 0,
-            "Inductance2Value": 0,
-            "Inductance2Status": 0,
+            "Resistance2Value": "N.A",
+            "Resistance2Status": "N.A",
+            "Inductance1Value": "N.A",
+            "Inductance1Status": "N.A",
+            "Inductance2Value": "N.A",
+            "Inductance2Status": "N.A",
             "Frequency1Value": self.getter(self.frequencyCalculatedValue),
-            "Frequency2Value": 0,
+            "Frequency2Value": "N.A",
             "Voltage1NoLoadValue": self.getter(self.voltageCalculatedValue),
             "Voltage1NoLoadStatus": 0,
-            "Voltage2NoLoadValue": 0,
-            "Voltage2NoLoadStatus": 0,
-            "Voltage1-10kLoadValue": 0,
-            "Voltage1-10kLoadStatus": 0,
-            "Voltage2-10kLoadValue": 0,
-            "Voltage2-10kLoadStatus": 0,
-            "Voltage1-3k3LoadValue": 0,
-            "Voltage1-3k3LoadStatus": 0,
-            "Voltage2-3k3LoadValue": 0,
-            "Voltage2-3k3LoadStatus": 0
+            "Voltage2NoLoadValue": "N.A",
+            "Voltage2NoLoadStatus": "N.A",
+            "Voltage1-10kLoadValue": "N.A",
+            "Voltage1-10kLoadStatus": "N.A",
+            "Voltage2-10kLoadValue": "N.A",
+            "Voltage2-10kLoadStatus": "N.A",
+            "Voltage1-3k3LoadValue": "N.A",
+            "Voltage1-3k3LoadStatus": "N.A",
+            "Voltage2-3k3LoadValue": "N.A",
+            "Voltage2-3k3LoadStatus": "N.A"
         }
         values = []
         for field in data:
@@ -215,12 +221,12 @@ class FRONTEND(QWidget):
                 values.append(data[field])
         ResultMaster.insert(tablename, *values)
 
-        result1 = ResultMaster.getDetails(tablename, self.get_tc_number())
-        result2 = UnitMaster.getDetails(self.get_part_number())
+        result1 = ResultMaster.getDetails(tablename, self.getter(self.tcNumberInput))
+        result2 = UnitMaster.getDetails(self.getDropBox(self.partNumberDropBox))
         JsonDataHandler.save_data(result1, result2)
 
-        self.pdfPath = Certificate(self.get_tc_number())
-        qrPath = QrCode.create(self.get_tc_number())
+        self.pdfPath = Certificate(self.getter(self.tcNumberInput))
+        qrPath = QrCode.create(self.getter(self.tcNumberInput))
         self.set_qr_code_image(qrPath)
 
         self.stacked_widget.setCurrentIndex(3)
@@ -330,96 +336,37 @@ class FRONTEND(QWidget):
         tablename = "1234-Twintech"
         tcNoList = ResultMaster.getTcNoList(tablename)
 
-        result1 = ResultMaster.getDetails(tablename, self.get_tc_number())
-        result2 = UnitMaster.getDetails(self.get_part_number())
+        result1 = ResultMaster.getDetails(tablename, self.getter(self.tcNumberInput))
+        result2 = UnitMaster.getDetails(self.getDropBox(self.partNumberDropBox))
         JsonDataHandler.save_data(result1, result2)
 
-        Certificate(self.get_tc_number())
-        QrCode.create(self.get_tc_number())
-
-    def on_poweroff_clicked(self):
-        if self.show_confirmation_dialog("Are you sure you want to power off the system?"):
-            os.system("poweroff")
-
-    def on_close_app_clicked(self):
-        if self.show_confirmation_dialog("Are you sure you want to close the application?"):
-            self.cleanup_resources()
-            self.close()
-
-    def cleanup_resources(self):
-        """Clean up resources before exiting."""
-        # Stop the measurement thread
-        if hasattr(self, 'measurement_thread') and self.measurement_thread.isRunning():
-            print("Stopping measurement thread...")
-            self.measurement_thread.terminate()
-            self.measurement_thread.wait()
-
-        # Close the serial connection
-        if self.esp_serial and self.esp_serial.is_open:
-            print("Closing serial connection...")
-            try:
-                self.esp_serial.close()
-            except Exception as e:
-                print(f"Error closing serial connection: {e}")
+        Certificate(self.getter(self.tcNumberInput))
+        QrCode.create(self.getter(self.tcNumberInput))
 
     # Getter Methods
-    def get_tc_number(self):
-        return self.tcNumberInput.text()
-
     def getter(self, name):
         return name.text()
 
-    def get_part_name(self):
-        return self.partNameInput.text()
-
-    def get_part_number(self):
-        return self.partNumberDropBox.currentText()
-
-    def get_batch_number(self):
-        return self.batchNumberInput.text()
-
-    def get_challan_quantity(self):
-        return self.challanQuantityInput.text()
-
-    def get_challan_number(self):
-        return self.challanNumberInput.text()
-
-    def get_supplier_code(self):
-        return self.supplierCodeDropBox.currentText()
+    def getDropBox(self, name):
+        return name.currentText()
 
     def get_partyName(self):
         return self.nameDropBox.currentText()
-
-    def get_resistance_value(self):
-        return self.resistanceCalculatedValue.text()
 
     def get_date(self):
         return self.tcDateInput.date().toString("dd MM yyyy")
 
     # Setter Methods
-    def set_part_name(self, value):
-        self.partNameInput.setText(value)
-
     def setter(self, name, value):
         name.setText(value)
 
-    def set_batch_number(self, value):
-        self.batchNumberInput.setText(value)
-
-    def set_challan_quantity(self, value):
-        self.challanQuantityInput.setText(value)
-
-    def set_challan_number(self, value):
-        self.challanNumberInput.setText(value)
-
-    def set_nameDropBox(self, value):
+    def set_DropBox(self, name, value):
         """Set the dropdown to the specified part number"""
-        index = self.nameDropBox.findText(value)
+        index = name.findText(value)
         if index >= 0:  # Value exists in dropdown
-            self.nameDropBox.setCurrentIndex(index)
+            name.setCurrentIndex(index)
         else:
             print(f"Warning: Part number '{value}' not found in dropdown")
-
 
     def show(self):
         """Show the UI."""
@@ -459,12 +406,17 @@ class FRONTEND(QWidget):
     def on_partNumber_dropBox_change(self):
         partNumber = self.partNumberDropBox.currentText()
         part_name = UnitMaster.getPartName(partNumber)
-        self.set_part_name(part_name)
+        self.setter(self.partNameInput, part_name)
+
+    def on_partyName_dropBox_change(self):
+        partyName = self.nameDropBox.currentText()
+        supplier_code = PartyMaster.getsupplierCode(partyName)
+        self.set_DropBox(self.supplierCodeDropBox, supplier_code)
 
     def on_supplierCode_dropBox_change(self):
         supplier_code = self.supplierCodeDropBox.currentText()
         party_name = PartyMaster.getPartyName(supplier_code)
-        self.set_nameDropBox(party_name)
+        self.set_DropBox(self.nameDropBox, party_name)
 
     def selectFile(parent=None):
         """
@@ -486,7 +438,6 @@ class FRONTEND(QWidget):
             "Excel Files (*.xlsx *.xls);;All Files (*)"
         )
         return file_path if file_path else None
-
 
     def delete_directory(self, directory_path):
         """
@@ -566,4 +517,29 @@ class FRONTEND(QWidget):
             return False
 
     def pdf_open(self):
-        subprocess.run(["xdg-open", f"./testData/{self.get_tc_number()}/{self.get_tc_number()}.pdf"], check=True)
+        subprocess.run(["xdg-open", f"./testData/{self.getter(self.tcNumberInput)}/{self.getter(self.tcNumberInput)}.pdf"], check=True)
+
+    def on_poweroff_clicked(self):
+        if self.show_confirmation_dialog("Are you sure you want to power off the system?"):
+            os.system("poweroff")
+
+    def on_close_app_clicked(self):
+        if self.show_confirmation_dialog("Are you sure you want to close the application?"):
+            self.cleanup_resources()
+            self.close()
+
+    def cleanup_resources(self):
+        """Clean up resources before exiting."""
+        # Stop the measurement thread
+        if hasattr(self, 'measurement_thread') and self.measurement_thread.isRunning():
+            print("Stopping measurement thread...")
+            self.measurement_thread.terminate()
+            self.measurement_thread.wait()
+
+        # Close the serial connection
+        if self.esp_serial and self.esp_serial.is_open:
+            print("Closing serial connection...")
+            try:
+                self.esp_serial.close()
+            except Exception as e:
+                print(f"Error closing serial connection: {e}")

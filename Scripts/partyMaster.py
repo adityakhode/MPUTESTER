@@ -108,3 +108,12 @@ class PartyMaster:
             cursor.execute(query, (supplierCode,))
             result = cursor.fetchone()
             return result[0] if result else None
+
+    @staticmethod
+    def getsupplierCode(PartyName):
+        query = 'SELECT SupplierCode FROM PartyMaster WHERE PartyName=? LIMIT 1;'
+        with PartyMaster._connect_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query, (PartyName,))
+            result = cursor.fetchone()
+            return result[0] if result else None

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>937</width>
+    <width>954</width>
     <height>554</height>
    </rect>
   </property>
@@ -125,7 +125,8 @@ border-radius:20px;</string>
        <item>
         <widget class="QPushButton" name="closeSettingButton">
          <property name="styleSheet">
-          <string notr="true">text-align:left;</string>
+          <string notr="true">text-align:left;
+color:black;</string>
          </property>
          <property name="text">
           <string>Close Settings</string>
@@ -145,7 +146,8 @@ border-radius:20px;</string>
        <item>
         <widget class="QPushButton" name="unitMasterUploadButton">
          <property name="styleSheet">
-          <string notr="true">text-align:left;
+          <string notr="true">color:black;
+text-align:left;
 </string>
          </property>
          <property name="text">
@@ -166,7 +168,8 @@ border-radius:20px;</string>
        <item>
         <widget class="QPushButton" name="partyMasterUploadButton">
          <property name="styleSheet">
-          <string notr="true">text-align:left;
+          <string notr="true">color:black;
+text-align:left;
 </string>
          </property>
          <property name="text">
@@ -187,7 +190,8 @@ border-radius:20px;</string>
        <item>
         <widget class="QPushButton" name="generateReportButton">
          <property name="styleSheet">
-          <string notr="true">text-align:left;</string>
+          <string notr="true">color:black;
+text-align:left;</string>
          </property>
          <property name="text">
           <string>Generate Report</string>
@@ -207,7 +211,8 @@ border-radius:20px;</string>
        <item>
         <widget class="QPushButton" name="configPrinterButton">
          <property name="styleSheet">
-          <string notr="true">text-align:left;</string>
+          <string notr="true">color:black;
+text-align:left;</string>
          </property>
          <property name="text">
           <string>Config.. Printer</string>
@@ -227,7 +232,8 @@ border-radius:20px;</string>
        <item>
         <widget class="QPushButton" name="closeAppButton">
          <property name="styleSheet">
-          <string notr="true">text-align:left;
+          <string notr="true">color:black;
+text-align:left;
 </string>
          </property>
          <property name="text">
@@ -248,7 +254,8 @@ border-radius:20px;</string>
        <item>
         <widget class="QPushButton" name="poweroffButton">
          <property name="styleSheet">
-          <string notr="true">text-align:left;</string>
+          <string notr="true">color:black;
+text-align:left;</string>
          </property>
          <property name="text">
           <string>Power off</string>
@@ -330,7 +337,7 @@ border-radius:18px;</string>
           <string notr="true">background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="currentIndex">
-          <number>3</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="welcomePage"/>
          <widget class="QWidget" name="entryForm">
@@ -391,6 +398,9 @@ border-radius:18px;</string>
                       <layout class="QHBoxLayout" name="horizontalLayout_9">
                        <item>
                         <widget class="QLabel" name="namelabel">
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
                          <property name="text">
                           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                          </property>
@@ -403,6 +413,9 @@ border-radius:18px;</string>
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
                          </property>
                         </widget>
                        </item>
@@ -426,6 +439,9 @@ border-radius:18px;</string>
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
                          <property name="text">
                           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;TC Number        :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                          </property>
@@ -433,14 +449,20 @@ border-radius:18px;</string>
                        </item>
                        <item>
                         <widget class="QLineEdit" name="tcNumberInput">
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
                          <property name="text">
-                          <string>TC1010101</string>
+                          <string/>
+                         </property>
+                         <property name="maxLength">
+                          <number>7</number>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                          </property>
                          <property name="placeholderText">
-                          <string>MPU 01</string>
+                          <string/>
                          </property>
                          <property name="clearButtonEnabled">
                           <bool>false</bool>
@@ -451,37 +473,35 @@ border-radius:18px;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QFrame" name="partNameFrame">
+                     <widget class="QFrame" name="partNumberFrame">
                       <property name="frameShape">
                        <enum>QFrame::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_19">
+                      <layout class="QHBoxLayout" name="horizontalLayout_23">
                        <item>
-                        <widget class="QLabel" name="partNameLabel">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
+                        <widget class="QLabel" name="partNumberLabel">
+                         <property name="styleSheet">
+                          <string notr="true">color:black;
+</string>
                          </property>
                          <property name="text">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Part Name        :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Part Number      :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                          </property>
                         </widget>
                        </item>
                        <item>
-                        <widget class="QLineEdit" name="partNameInput">
-                         <property name="text">
-                          <string>MPU 01</string>
+                        <widget class="QComboBox" name="partNumberDropBox">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
                          </property>
-                         <property name="placeholderText">
-                          <string>MPU 01</string>
-                         </property>
-                         <property name="clearButtonEnabled">
-                          <bool>false</bool>
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
                          </property>
                         </widget>
                        </item>
@@ -499,6 +519,9 @@ border-radius:18px;</string>
                       <layout class="QHBoxLayout" name="horizontalLayout_20">
                        <item>
                         <widget class="QLabel" name="batchNumberlabel">
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
                          <property name="text">
                           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Batch Number     :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                          </property>
@@ -506,8 +529,11 @@ border-radius:18px;</string>
                        </item>
                        <item>
                         <widget class="QLineEdit" name="batchNumberInput">
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
                          <property name="placeholderText">
-                          <string>Batch Number</string>
+                          <string/>
                          </property>
                         </widget>
                        </item>
@@ -525,6 +551,9 @@ border-radius:18px;</string>
                       <layout class="QHBoxLayout" name="horizontalLayout_21">
                        <item>
                         <widget class="QLabel" name="challanQuantityLable">
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
                          <property name="text">
                           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Challan Quantity :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                          </property>
@@ -538,11 +567,14 @@ border-radius:18px;</string>
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
                          <property name="inputMethodHints">
                           <set>Qt::ImhPreferNumbers</set>
                          </property>
                          <property name="placeholderText">
-                          <string>Challan Quantity</string>
+                          <string/>
                          </property>
                         </widget>
                        </item>
@@ -562,6 +594,41 @@ border-radius:18px;</string>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_11">
                     <item>
+                     <widget class="QFrame" name="supplerCodeFrame">
+                      <property name="frameShape">
+                       <enum>QFrame::NoFrame</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_25">
+                       <item>
+                        <widget class="QLabel" name="supplierCodeLabel">
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
+                         <property name="text">
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Supplier Code  :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QComboBox" name="supplierCodeDropBox">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
                      <widget class="QFrame" name="tcDateFrame">
                       <property name="frameShape">
                        <enum>QFrame::NoFrame</enum>
@@ -572,6 +639,9 @@ border-radius:18px;</string>
                       <layout class="QHBoxLayout" name="horizontalLayout_22">
                        <item>
                         <widget class="QLabel" name="tcDateLabel">
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
                          <property name="text">
                           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;TC Date        :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                          </property>
@@ -584,6 +654,9 @@ border-radius:18px;</string>
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
                          </property>
                          <property name="inputMethodHints">
                           <set>Qt::ImhDate|Qt::ImhPreferNumbers</set>
@@ -609,28 +682,43 @@ border-radius:18px;</string>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QFrame" name="partNumberFrame">
+                     <widget class="QFrame" name="partNameFrame">
                       <property name="frameShape">
                        <enum>QFrame::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_23">
+                      <layout class="QHBoxLayout" name="horizontalLayout_19">
                        <item>
-                        <widget class="QLabel" name="partNumberLabel">
+                        <widget class="QLabel" name="partNameLabel">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
                          <property name="text">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Part Number    :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Part Name      :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                          </property>
                         </widget>
                        </item>
                        <item>
-                        <widget class="QComboBox" name="partNumberDropBox">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
+                        <widget class="QLineEdit" name="partNameInput">
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="placeholderText">
+                          <string/>
+                         </property>
+                         <property name="clearButtonEnabled">
+                          <bool>false</bool>
                          </property>
                         </widget>
                        </item>
@@ -648,6 +736,9 @@ border-radius:18px;</string>
                       <layout class="QHBoxLayout" name="horizontalLayout_24">
                        <item>
                         <widget class="QLabel" name="challanNumberlabel">
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
                          <property name="text">
                           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Challan Number :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                          </property>
@@ -655,46 +746,20 @@ border-radius:18px;</string>
                        </item>
                        <item>
                         <widget class="QLineEdit" name="challanNumberInput">
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
                          <property name="text">
-                          <string>TextLabel</string>
+                          <string/>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                          </property>
                          <property name="placeholderText">
-                          <string>MPU 01</string>
+                          <string/>
                          </property>
                          <property name="clearButtonEnabled">
                           <bool>false</bool>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QFrame" name="supplerCodeFrame">
-                      <property name="frameShape">
-                       <enum>QFrame::NoFrame</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_25">
-                       <item>
-                        <widget class="QLabel" name="supplierCodeLabel">
-                         <property name="text">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;pre&gt;Supplier Code  :&lt;/pre&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QComboBox" name="supplierCodeDropBox">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
                          </property>
                         </widget>
                        </item>
@@ -723,8 +788,8 @@ border-radius:18px;</string>
                        <item>
                         <widget class="QPushButton" name="nextButton1">
                          <property name="styleSheet">
-                          <string notr="true">background-color: rgb(45, 168, 72);
-color: rgb(255, 255, 255);</string>
+                          <string notr="true">color:black;
+background-color: rgb(45, 168, 72);</string>
                          </property>
                          <property name="text">
                           <string>Next</string>
@@ -840,6 +905,9 @@ color: rgb(255, 255, 255);</string>
                                  <verstretch>0</verstretch>
                                 </sizepolicy>
                                </property>
+                               <property name="styleSheet">
+                                <string notr="true">color:black;</string>
+                               </property>
                                <property name="text">
                                 <string>Resistance</string>
                                </property>
@@ -852,6 +920,9 @@ color: rgb(255, 255, 255);</string>
                                  <horstretch>0</horstretch>
                                  <verstretch>0</verstretch>
                                 </sizepolicy>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">color:black;</string>
                                </property>
                                <property name="text">
                                 <string>Ideal Resistance: 1220</string>
@@ -907,11 +978,14 @@ background-color: rgb(0, 255, 0);</string>
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
                          <property name="frameShape">
                           <enum>QFrame::Panel</enum>
                          </property>
                          <property name="text">
-                          <string>TextLabel</string>
+                          <string/>
                          </property>
                         </widget>
                        </item>
@@ -959,6 +1033,9 @@ background-color: rgb(0, 255, 0);</string>
                                  <verstretch>0</verstretch>
                                 </sizepolicy>
                                </property>
+                               <property name="styleSheet">
+                                <string notr="true">color:black;</string>
+                               </property>
                                <property name="text">
                                 <string>Frequency</string>
                                </property>
@@ -971,6 +1048,9 @@ background-color: rgb(0, 255, 0);</string>
                                  <horstretch>0</horstretch>
                                  <verstretch>0</verstretch>
                                 </sizepolicy>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">color:black;</string>
                                </property>
                                <property name="text">
                                 <string>Ideal Frequency: 220</string>
@@ -1026,11 +1106,11 @@ background-color: rgb(0, 255, 0);</string>
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
                          <property name="frameShape">
                           <enum>QFrame::Panel</enum>
-                         </property>
-                         <property name="text">
-                          <string>TextLabel</string>
                          </property>
                         </widget>
                        </item>
@@ -1056,7 +1136,8 @@ background-color: rgb(0, 255, 0);</string>
                     <item>
                      <widget class="QPushButton" name="startButton">
                       <property name="styleSheet">
-                       <string notr="true">background-color: rgb(45, 168, 72);</string>
+                       <string notr="true">color:black;
+background-color: rgb(45, 168, 72);</string>
                       </property>
                       <property name="text">
                        <string>Start</string>
@@ -1116,6 +1197,9 @@ background-color: rgb(0, 255, 0);</string>
                                  <verstretch>0</verstretch>
                                 </sizepolicy>
                                </property>
+                               <property name="styleSheet">
+                                <string notr="true">color:black;</string>
+                               </property>
                                <property name="text">
                                 <string>Voltage</string>
                                </property>
@@ -1128,6 +1212,9 @@ background-color: rgb(0, 255, 0);</string>
                                  <horstretch>0</horstretch>
                                  <verstretch>0</verstretch>
                                 </sizepolicy>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">color:black;</string>
                                </property>
                                <property name="text">
                                 <string>Ideal Voltage: 220V</string>
@@ -1183,11 +1270,11 @@ background-color: rgb(0, 255, 0);</string>
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
+                         <property name="styleSheet">
+                          <string notr="true">color:black;</string>
+                         </property>
                          <property name="frameShape">
                           <enum>QFrame::Panel</enum>
-                         </property>
-                         <property name="text">
-                          <string>TextLabel</string>
                          </property>
                         </widget>
                        </item>
@@ -1214,7 +1301,8 @@ background-color: rgb(0, 255, 0);</string>
                     <item>
                      <widget class="QPushButton" name="stopButton">
                       <property name="styleSheet">
-                       <string notr="true">background-color: rgb(255, 51, 59);</string>
+                       <string notr="true">background-color: rgb(255, 51, 59);
+color:black;</string>
                       </property>
                       <property name="text">
                        <string>Emergency Stop</string>
@@ -1255,7 +1343,8 @@ background-color: rgb(0, 255, 0);</string>
                  <item>
                   <widget class="QPushButton" name="backButton">
                    <property name="styleSheet">
-                    <string notr="true">background-color: rgb(45, 168, 72);</string>
+                    <string notr="true">color:black;
+background-color: rgb(45, 168, 72);</string>
                    </property>
                    <property name="text">
                     <string>Back</string>
@@ -1265,7 +1354,8 @@ background-color: rgb(0, 255, 0);</string>
                  <item>
                   <widget class="QPushButton" name="nextButton2">
                    <property name="styleSheet">
-                    <string notr="true">background-color: rgb(45, 168, 72);</string>
+                    <string notr="true">color:black;
+background-color: rgb(45, 168, 72);</string>
                    </property>
                    <property name="text">
                     <string>Next</string>
@@ -1458,6 +1548,9 @@ border-radius:5px;</string>
                 <layout class="QHBoxLayout" name="horizontalLayout_3">
                  <item>
                   <widget class="QCheckBox" name="saveResultCheckBox">
+                   <property name="styleSheet">
+                    <string notr="true">color:black;</string>
+                   </property>
                    <property name="text">
                     <string>Save this result Locally</string>
                    </property>
@@ -1475,6 +1568,9 @@ border-radius:5px;</string>
                  </item>
                  <item>
                   <widget class="QPushButton" name="testNewSensorButton">
+                   <property name="styleSheet">
+                    <string notr="true">color:black;</string>
+                   </property>
                    <property name="text">
                     <string>Test new Sensor</string>
                    </property>
@@ -1492,6 +1588,9 @@ border-radius:5px;</string>
                  </item>
                  <item>
                   <widget class="QPushButton" name="closeAppButton_2">
+                   <property name="styleSheet">
+                    <string notr="true">color:black;</string>
+                   </property>
                    <property name="text">
                     <string>Close App</string>
                    </property>
