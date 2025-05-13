@@ -4,3 +4,5 @@ openpyxl
 pycups
 qrcode
 PySide6
+pyinstaller
+pyinstaller-hooks-contrib

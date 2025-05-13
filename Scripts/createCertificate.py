@@ -1,11 +1,11 @@
 from PIL import Image, ImageDraw, ImageFont
 from Scripts.loadJson import JsonDataHandler
 import os
-
+from Scripts.pathConf import resource_path
 class Certificate:
     def __init__(self, tc_no):
-        self.image = Image.open("refrenceMaterial/certificate/certificate.png")
-        font_path = "./refrenceMaterial/certificate/Helvetica.ttf"
+        self.image = Image.open(resource_path("refrenceMaterial/certificate/certificate.png"))
+        font_path = resource_path("./refrenceMaterial/certificate/Helvetica.ttf")
         self.text_color = (0, 0, 0)  # Black color for the text
         self.font = ImageFont.truetype(font_path, size=35)  # Adjust the size as needed
         self.draw = ImageDraw.Draw(self.image)

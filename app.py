@@ -3,7 +3,7 @@ from Scripts.unitMaster import UnitMaster
 from Scripts.partyMaster import PartyMaster
 from Scripts.resultMaster import ResultMaster
 from Scripts.printerConfig import PrinterManagerUnix
-
+from Scripts.pathConf import resource_path
 import sys
 from PySide6.QtCore import Qt
 import frontend.resources
@@ -22,8 +22,8 @@ class app:
         PartyMaster.create()
 
         # Paths to the .ui and .qrc files
-        ui_file_path = "frontend/v1.ui"
-        qrc_file_path = "frontend/assets.qrc"
+        ui_file_path = resource_path("frontend/v1.ui")
+        qrc_file_path = resource_path("frontend/assets.qrc")
 
         # Create the FRONTEND instance
         frontend = FRONTEND(ui_file_path, qrc_file_path)
