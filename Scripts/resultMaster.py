@@ -171,3 +171,13 @@ class ResultMaster:
             cursor = conn.cursor()
             cursor.execute(query)
             return [row[0] for row in cursor.fetchall()]
+
+    @staticmethod
+    def getlastTCno(tableName):
+        """Get the part name for a given part number."""
+        query = f'SELECT TcNo FROM "{tableName}" ORDER BY TcNo DESC'
+        with ResultMaster._connect_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute(query)
+            result = cursor.fetchone()
+            return result[0] if result else 0000000

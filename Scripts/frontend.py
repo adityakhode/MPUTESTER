@@ -413,6 +413,7 @@ class FRONTEND(QWidget):
         supplier_code = PartyMaster.getsupplierCode(partyName)
         self.set_DropBox(self.supplierCodeDropBox, supplier_code)
 
+
     def on_supplierCode_dropBox_change(self):
         supplier_code = self.supplierCodeDropBox.currentText()
         party_name = PartyMaster.getPartyName(supplier_code)
