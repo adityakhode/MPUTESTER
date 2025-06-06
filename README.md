@@ -16,10 +16,14 @@ MPUTESTER/
        |-- Scripts/
                    |--databases.py
                    |--main.py
-       README.md    
+       | --testCases/
+                   |--createDatabase.py
+                   |--hardwareTest.py
+       app.py 
        .gitignore
        .requirments.txt
        .git/
+       README.md   
 ```
 
 ---
@@ -46,3 +50,7 @@ sudo apt-get install libcups2-dev #pycups supporting library for printing
 pip install -r requirments.txt
 ```
 
+## 4. Initilise resource
+```
+pyside6-rcc frontend/assets.qrc -o frontend/resources.py
+```
