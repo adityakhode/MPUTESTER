@@ -1,56 +1,76 @@
-# MPU Tester
-- Something about the application.
+# MPUTester
+
+**MPUTester** is a desktop GUI application built with **PySide6** for testing Magnetic Pickup Units (MPUs) on Ubuntu Linux systems. It provides a modern interface for real-time sensor data acquisition, QR and certificate generation, and database logging.
+
+## 🎥 Demo Video
+
+[![Watch Demo](https://img.youtube.com/vi/Y0fbIhlIZoM/0.jpg)](https://www.youtube.com/watch?v=Y0fbIhlIZoM&list=PLDbTtMby4HbyvxpOV6Lv6e-EuP07iU_90)  
+*Click the image above to watch the demo on YouTube*
 
 ---
-# File Structure
-```
-MPUTESTER/
-       |-- Testdata/                   
-                    |--1234-Twintech/
-                    |--1235-wintech/
-       |-- Databases/
-                    |--unitMaster.db
-                    |--partyMaster.db
-                    |--1234-Twintech.db
-                    |--1235-Twintech.db
-       |-- Scripts/
-                   |--databases.py
-                   |--main.py
-       | --testCases/
-                   |--createDatabase.py
-                   |--hardwareTest.py
-       app.py 
-       .gitignore
-       .requirments.txt
-       .git/
-       README.md   
-```
+
+## 🧩 Features
+
+- 🖼️ PySide6-based modern GUI
+- 🔌 Serial communication with MPUs using `pyserial`
+- 🧾 Certificate generation using Pillow
+- 🔳 QR code generation for test metadata
+- 🗃️ SQLite-based local database for party/unit/result management
+- 🖨️ Certificate printing via Linux CUPS
+- 🔧 Modular structure for easy maintenance and scaling
 
 ---
-# Commands To setup  Env
 
-## 1. Clone the package
-```
+## 🖥️ System Requirements
+
+- **Operating System:** Ubuntu 20.04 / 22.04 or later
+- **Python Version:** 3.9+
+- **Dependencies:**
+  - PySide6
+  - pyserial
+  - Pillow
+  - qrcode
+  - pycups
+  - sqlite3 (builtin)
+
+---
+
+## ⚙️ Installation (Ubuntu)
+
+### Clone or extract the repository
+```bash
 git clone https://github.com/adityakhode/MPUTESTER.git
-
-cd MPUTESTER  
-```
-## 2. Make a Virtual environment
-```
-# Create a Virtual Environment
-python3 -m venv MPUTestKitEnv
-
-# Activate the environment.
-source MPUTestKitEnv/bin/activate 
+cd MPUTESTER
 ```
 
-## 3. Install all Requirments
+### Create virtual environment
+```bash
+python3 -m venv venv
+source venv/bin/activate
 ```
+
+### Install dependencies
+```bash
 sudo apt-get install libcups2-dev #pycups supporting library for printing
-pip install -r requirments.txt
+pip install -r requirements.txt
 ```
 
-## 4. Initilise resource
-```
+### Initilise resource
+```bash
 pyside6-rcc frontend/assets.qrc -o frontend/resources.py
 ```
+
+## 🚀 Running the Application
+```bash
+# Make sure your venv is activated
+source venv/bin/activate
+
+# Run the application
+python app.py
+```
+## 👤 Author & Contact
+- Made with ❤️ by Aditya Khode, Somesh Mutha, Soham Naik
+- 📧 Email: khodeaditya7@gmail.com
+📍 Reach out for contributions, feedback, or queries!
+
+MPUTester is optimized for Ubuntu-based laptops and Raspberry Pi devices running low-power environments.
